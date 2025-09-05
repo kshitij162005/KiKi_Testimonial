@@ -10,7 +10,7 @@ import SpaceDetails from './Pages/SpaceDetails';
 import Profile from './Pages/Profile';
 import LandingPage from './Pages/LandingPage';
 import ResetPasswordPage from './Pages/ResetPasswordPage';
-import TestPage from './components/TestPage';
+import TestPage from './Components/TestPage';
 import ApiDocs from './Pages/ApiDocs';
 
 const App = () => {
