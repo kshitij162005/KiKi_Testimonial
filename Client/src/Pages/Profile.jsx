@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, User, Mail, Phone, Shield, Camera, Save, X } from 'lucide-react';
 import { Button, EditableField } from '../Components/ui';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../Components/ui/card';
 import './Styles/Profile.css';
 
 const Profile = () => {
