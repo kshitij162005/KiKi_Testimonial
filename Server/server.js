@@ -3,7 +3,7 @@ const Router = require("./routes.js");
 const { isConnected, connected } = require("./db.js");
 const cors = require("cors");
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 const dotenv = require("dotenv");
 const upload=require('./uploads.js');
 
