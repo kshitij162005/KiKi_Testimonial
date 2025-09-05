@@ -35,8 +35,14 @@ app.get("/", (req, res) => {
 });
 app.use(Router);
 
+// Initialize database connection
+connected();
+
+// Export for Vercel serverless functions
+module.exports = app;
+
+// For local development
 if (require.main === module) {
-  connected();
   app.listen(port, async () => {
     console.log(`🚀 server running on PORT: ${port}`);
   });
