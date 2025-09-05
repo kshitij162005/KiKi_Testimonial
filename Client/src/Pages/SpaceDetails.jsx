@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../Components/ui/card';
 import { Copy, CheckCircle, ExternalLink, Users, MessageSquare, ArrowLeft, TrendingUp } from 'lucide-react';
 import { Button, StarRating, StarDisplay, EditableField, SearchInput } from '../Components/ui';
 import SentimentAnalysis from '../Components/dashboard/SentimentAnalysis/SentimentAnalysis';
