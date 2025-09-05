@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const feedbackSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
+  rating: { type: Number, min: 1, max: 5 }, // Star rating (1-5)
   responses: [{ question: String, answer: String }],
   feedbackType: { type: String, enum: ["text", "video"], required: true },
   video: { type: String },

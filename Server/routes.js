@@ -102,12 +102,26 @@ router.post("/addSpace", upload.single("image"), async (req, res) => {
       imgUrl = result.secure_url;
     }
 
+    // Process questions - handle both string (old format) and array (new format)
+    let processedQuestions = [];
+    if (typeof questions === 'string') {
+      try {
+        // Try to parse as JSON first (new format)
+        processedQuestions = JSON.parse(questions);
+      } catch (e) {
+        // If JSON parsing fails, treat as comma-separated string (old format)
+        processedQuestions = questions.split(',').map(q => q.trim()).filter(q => q.length > 0);
+      }
+    } else if (Array.isArray(questions)) {
+      processedQuestions = questions.filter(q => q && q.trim().length > 0);
+    }
+
     const newSpace = new Space({
       spacename,
       publicUrl,
       headerTitle,
       customMessage,
-      questions,
+      questions: processedQuestions,
       starRatings,
       user_Id,
       img: imgUrl, 
@@ -163,7 +177,17 @@ router.get("/space/:publicUrl", async (req, res) => {
 router.post("/space/:publicUrl/feedback", async (req, res) => {
   try {
     const { publicUrl } = req.params;
-    const { name, email, responses, feedbackType } = req.body;
+    const { name, email, rating, responses, feedbackType } = req.body;
+
+    // Validate required fields
+    if (!name || !email) {
+      return res.status(400).json({ message: "Name and email are required" });
+    }
+
+    // Validate rating if provided
+    if (rating !== undefined && (rating < 1 || rating > 5)) {
+      return res.status(400).json({ message: "Rating must be between 1 and 5" });
+    }
 
     const space = await Space.findOne({ publicUrl });
 
@@ -174,6 +198,7 @@ router.post("/space/:publicUrl/feedback", async (req, res) => {
     const feedback = {
       name,
       email,
+      rating: space.starRatings ? rating : undefined, // Only include rating if enabled
       responses: space.questions.map((question, index) => ({
         question,
         answer: responses[index] || "",
@@ -186,7 +211,14 @@ router.post("/space/:publicUrl/feedback", async (req, res) => {
 
     res
       .status(201)
-      .json({ message: "Feedback submitted successfully", feedback });
+      .json({ 
+        message: "Feedback submitted successfully", 
+        feedback: {
+          id: feedback._id,
+          submittedAt: feedback.submittedAt,
+          rating: feedback.rating
+        }
+      });
   } catch (error) {
     console.error("Error submitting feedback:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -243,6 +275,48 @@ router.get("/space/:publicUrl/feedbackCounts", async (req, res) => {
     res.status(200).json({ textFeedbackCount, videoFeedbackCount });
   } catch (error) {
     console.error("Error fetching feedback counts:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Get rating analytics for a space
+router.get("/space/:publicUrl/analytics/ratings", async (req, res) => {
+  try {
+    const { publicUrl } = req.params;
+    const space = await Space.findOne({ publicUrl });
+
+    if (!space) {
+      return res.status(404).json({ message: "Space not found" });
+    }
+
+    // Filter feedback with ratings
+    const ratedFeedback = space.feedback.filter(fb => fb.rating && fb.rating > 0);
+    
+    if (ratedFeedback.length === 0) {
+      return res.status(200).json({
+        averageRating: 0,
+        totalRatings: 0,
+        ratingDistribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+      });
+    }
+
+    // Calculate average rating
+    const totalRating = ratedFeedback.reduce((sum, fb) => sum + fb.rating, 0);
+    const averageRating = Math.round((totalRating / ratedFeedback.length) * 10) / 10;
+
+    // Calculate rating distribution
+    const ratingDistribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    ratedFeedback.forEach(fb => {
+      ratingDistribution[fb.rating]++;
+    });
+
+    res.status(200).json({
+      averageRating,
+      totalRatings: ratedFeedback.length,
+      ratingDistribution
+    });
+  } catch (error) {
+    console.error("Error fetching rating analytics:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });

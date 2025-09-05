@@ -1,44 +1,184 @@
-/* Ensure that the body and html elements can scroll */
-html, body {
-    height: 100%;
-    margin: 0;
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-bg text-text-primary font-sans antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+  
+  /* Custom scrollbar for modern browsers */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full hover:bg-text-muted transition-colors;
+  }
+  
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.border') theme('colors.muted');
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Modern button styles with 2026 design tokens */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-150 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .btn-primary {
+    @apply btn bg-brand text-bg hover:bg-brand-600 focus:ring-brand/20 shadow-soft hover:shadow-glow;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-surface text-text-primary hover:bg-muted focus:ring-brand/20 border border-border hover:border-text-muted;
+  }
+  
+  .btn-ghost {
+    @apply btn text-text-secondary hover:text-text-primary hover:bg-surface focus:ring-brand/20;
+  }
+  
+  .btn-danger {
+    @apply btn bg-danger text-white hover:bg-danger/90 focus:ring-danger/20 shadow-soft;
+  }
+  
+  /* Modern input styles */
+  .input {
+    @apply w-full rounded-xl border border-border bg-surface px-4 py-3 text-text-primary placeholder-text-muted transition-all duration-150 focus:border-brand focus:ring-2 focus:ring-brand/20 focus:outline-none focus:bg-muted;
+  }
+  
+  .input:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+  
+  /* Modern card styles */
+  .card {
+    @apply rounded-2xl border border-border bg-surface/50 backdrop-blur-sm shadow-soft;
+  }
+  
+  .card-hover {
+    @apply card hover:border-text-muted hover:bg-surface/70 hover:shadow-soft-lg transition-all duration-150;
+  }
+  
+  /* Modern gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-brand via-brand-600 to-brand-700 bg-clip-text text-transparent;
+  }
+  
+  /* Modern glass effect */
+  .glass {
+    @apply bg-surface/20 backdrop-blur-md border border-border/50;
+  }
+  
+  /* Modern divider */
+  .divider {
+    @apply h-px bg-gradient-to-r from-transparent via-border to-transparent;
+  }
+  
+  /* Modern focus ring */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-brand/20 focus:ring-offset-2 focus:ring-offset-bg;
+  }
+  
+  /* Navigation styles */
+  .nav-link {
+    @apply text-text-secondary hover:text-text-primary transition-colors duration-150 ease-out;
+  }
+  
+  .nav-link-active {
+    @apply text-text-primary;
+  }
+}
+
+@layer utilities {
+  /* Text selection */
+  ::selection {
+    @apply bg-brand/20 text-brand;
+  }
+  
+  /* Smooth transitions with performance optimization */
+  .transition-smooth {
+    @apply transition-all duration-150 ease-out;
+  }
+  
+  /* Modern shadows */
+  .shadow-modern {
+    @apply shadow-soft hover:shadow-soft-lg transition-shadow duration-150;
+  }
+  
+  /* Gradient backgrounds */
+  .bg-gradient-brand {
+    @apply bg-gradient-to-br from-brand via-brand-600 to-brand-700;
+  }
+  
+  .bg-gradient-surface {
+    @apply bg-gradient-to-br from-surface via-muted to-surface;
+  }
+  
+  /* Animation utilities */
+  .animate-on-scroll {
+    @apply opacity-0 translate-y-2 transition-all duration-500 ease-out;
+  }
+  
+  .animate-on-scroll.visible {
+    @apply opacity-100 translate-y-0;
+  }
+  
+  /* Performance optimized animations */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    will-change: opacity;
+  }
+  
+  /* Accessibility utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
     padding: 0;
-    overflow-y: auto; /* This will add a scrollbar to the page */
-    scrollbar-color: #6200ea #333333; /* For non-WebKit browsers */
-    scrollbar-width: thin; /* For non-WebKit browsers */
-}
-
-/* Style the scrollbar (works in WebKit browsers like Chrome, Safari) */
-body::-webkit-scrollbar {
-    width: 16px; /* Increased width for better visibility */
-}
-
-body::-webkit-scrollbar-track {
-    background: linear-gradient(180deg, #333333, #1e1e1e); /* Gradient track for a more polished look */
-    border-radius: 10px; /* Smooth rounded corners */
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.7); /* Soft inner shadow for depth */
-}
-
-body::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #7c4dff, #6200ea); /* Gradient thumb for a modern look */
-    border-radius: 10px; /* Rounded corners */
-    border: 2px solid #1e1e1e; /* Clean, defined border */
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.7); /* Soft inner shadow for the thumb */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for interactions */
-}
-
-body::-webkit-scrollbar-thumb:hover {
-    background-color: #bb86fc; /* Lighter color on hover for better feedback */
-    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.9); /* More prominent shadow on hover */
-}
-
-body::-webkit-scrollbar-corner {
-    background-color: #333333; /* Ensuring the corner between scrollbars looks consistent */
-}
-
-/* Hide scrollbar after 5 seconds of inactivity */
-.scrollable-element {
-    overflow-y: auto;
-    scrollbar-width: thin; /* For non-WebKit browsers */
-    scrollbar-color: #6200ea #333333; /* For non-WebKit browsers */
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  /* Skip link for keyboard navigation */
+  .skip-link {
+    @apply absolute -top-10 left-4 z-50 bg-brand text-bg px-4 py-2 rounded-lg focus:top-4 transition-all duration-150;
+  }
 }
