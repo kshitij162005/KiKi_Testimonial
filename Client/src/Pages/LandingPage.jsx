@@ -14,10 +14,8 @@ import {
   FiMessageSquare
 } from 'react-icons/fi';
 import Designer from "../Images/Designer.png";
-import GoOn from '../Images/GoOnLogo.png';
-import BingeLearn from '../Images/BingeLogo.png';
-import GigX from '../Images/GigX.png';
-import AnonymX from '../Images/AnonymXLogo.jpeg';
+import Footer from '../Components/layout/Footer';
+import EnhancedBackground from '../Components/ui/EnhancedBackground/EnhancedBackground';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -69,20 +67,14 @@ const LandingPage = () => {
   ];
 
   const stats = [
-    { number: "10K+", label: "Happy Customers" },
-    { number: "50K+", label: "Testimonials Collected" },
     { number: "99.9%", label: "Uptime" },
-    { number: "24/7", label: "Support" }
+    { number: "24/7", label: "Support" },
+    { number: "Free", label: "To Start" },
+    { number: "Secure", label: "By Design" }
   ];
 
   return (
-    <div className="min-h-screen bg-background-950 overflow-hidden">
-      {/* Animated background elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-500/10 rounded-full blur-3xl animate-pulse-soft"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-accent-500/10 rounded-full blur-3xl animate-pulse-soft" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-surface-500/5 rounded-full blur-3xl animate-float"></div>
-      </div>
+    <EnhancedBackground variant="landing">
 
       {/* Navigation */}
       <nav className="relative z-10 px-6 py-6 lg:px-8">
@@ -130,8 +122,8 @@ const LandingPage = () => {
               <span className="block gradient-text">that drives growth</span>
             </h1>
             <p className="text-lg md:text-xl text-surface-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Transform customer experiences with powerful testimonial collection. 
-              No coding required, just seamless integration and actionable insights.
+              A simple, secure platform for collecting and managing customer testimonials. 
+              Create custom feedback forms and gather valuable insights from your customers.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
               <button 
@@ -168,8 +160,8 @@ const LandingPage = () => {
               Built for the future of customer feedback
             </h2>
             <p className="text-lg text-surface-400 max-w-2xl mx-auto">
-              Everything you need to collect, manage, and leverage customer testimonials 
-              for business growth and improvement.
+              Essential tools for collecting, organizing, and analyzing customer feedback 
+              to help improve your products and services.
             </p>
           </div>
           
@@ -191,28 +183,40 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Social Proof */}
+      {/* Value Proposition */}
       <section className="relative z-10 px-6 py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-surface-100 mb-4">
-              Trusted by innovative companies
+              Start collecting feedback today
             </h2>
             <p className="text-lg text-surface-400">
-              Join thousands of businesses already collecting valuable customer feedback
+              Simple, secure, and effective testimonial collection for businesses of all sizes
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
-            {[GoOn, BingeLearn, AnonymX, GigX].map((logo, index) => (
-              <div key={index} className="p-6 rounded-xl bg-surface-900/50 border border-surface-800 hover:border-surface-700 transition-all duration-300">
-                <img 
-                  src={logo} 
-                  alt="Company Logo" 
-                  className="h-12 w-auto opacity-70 hover:opacity-100 transition-opacity duration-300"
-                />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="card-hover p-8 text-center">
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 flex items-center justify-center text-primary-400 mb-6 mx-auto">
+                <FiMessageSquare className="w-8 h-8" />
               </div>
-            ))}
+              <h3 className="text-xl font-semibold text-surface-100 mb-3">Easy Setup</h3>
+              <p className="text-surface-400">Get started in minutes with our intuitive interface. No technical expertise required.</p>
+            </div>
+            <div className="card-hover p-8 text-center">
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 flex items-center justify-center text-primary-400 mb-6 mx-auto">
+                <FiShield className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-semibold text-surface-100 mb-3">Privacy First</h3>
+              <p className="text-surface-400">Your data and your customers' data are protected with enterprise-grade security.</p>
+            </div>
+            <div className="card-hover p-8 text-center">
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary-500/20 to-accent-500/20 flex items-center justify-center text-primary-400 mb-6 mx-auto">
+                <FiTrendingUp className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-semibold text-surface-100 mb-3">Actionable Insights</h3>
+              <p className="text-surface-400">Turn customer feedback into meaningful insights that drive business improvement.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -225,8 +229,8 @@ const LandingPage = () => {
               Ready to transform your customer feedback?
             </h2>
             <p className="text-lg text-surface-400 mb-8 max-w-2xl mx-auto">
-              Start collecting testimonials today and turn customer insights into business growth. 
-              No credit card required, no setup fees.
+              Create your first feedback collection space and start gathering valuable customer insights. 
+              Free to get started, no credit card required.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button 
@@ -245,22 +249,8 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 px-6 py-12 lg:px-8 border-t border-surface-800">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="flex items-center space-x-3 mb-4 md:mb-0">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
-                <img src={Designer} alt="Nova" className="w-5 h-5 rounded" />
-              </div>
-              <span className="text-lg font-semibold text-surface-100">Nova</span>
-            </div>
-            <div className="text-sm text-surface-500">
-              © 2024 Nova Testimonial. All rights reserved.
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+      <Footer />
+    </EnhancedBackground>
   );
 };
 

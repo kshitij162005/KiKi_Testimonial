@@ -1,6 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&display=swap');
 
+/* Import our custom glass UI styles */
+@import './styles/glass-ui.css';
+
+/* Import component styles */
+@import './Components/ui/Button/Button.css';
+@import './Components/ui/DragDropList/DragDropList.css';
+@import './Components/ui/StarRating/StarRating.css';
+@import './Components/ui/EditableField/EditableField.css';
+@import './Components/ui/SearchInput/SearchInput.css';
+@import './Components/ui/ComingSoonBadge/ComingSoonBadge.css';
+@import './Components/ui/AnimatedBackground/AnimatedBackground.css';
+@import './Components/dashboard/SentimentAnalysis/SentimentAnalysis.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -75,11 +88,31 @@
   
   /* Modern input styles */
   .input {
-    @apply w-full rounded-xl border border-border bg-surface px-4 py-3 text-text-primary placeholder-text-muted transition-all duration-150 focus:border-brand focus:ring-2 focus:ring-brand/20 focus:outline-none focus:bg-muted;
+    @apply w-full rounded-xl border border-border bg-surface px-4 py-3 text-text-primary placeholder-text-muted transition-all duration-150 focus:border-brand focus:ring-2 focus:ring-brand/20 focus:outline-none;
+    background: rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  .input:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
   }
   
   .input:disabled {
     @apply opacity-50 cursor-not-allowed;
+  }
+  
+  /* Fix for all input, textarea, and select elements */
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #E6EAF2 !important;
+  }
+  
+  input:not([type="checkbox"]):not([type="radio"]):focus,
+  textarea:focus,
+  select:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #E6EAF2 !important;
   }
   
   /* Modern card styles */

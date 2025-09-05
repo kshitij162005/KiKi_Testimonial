@@ -1,102 +1,136 @@
 import React, { useState } from 'react'
-import { FiPlus, FiTrash2, FiMoreVertical } from 'react-icons/fi'
-import { Button } from '../ui/button'
-import { Input } from '../ui/input'
-import { Label } from '../ui/label'
+import { FiPlus, FiTrash2 } from 'react-icons/fi'
 
-const DynamicQuestions = ({ questions, onChange }) => {
-  const [questionList, setQuestionList] = useState(
-    questions.length > 0 ? questions : ['']
-  )
+const DynamicQuestions = ({ questions = [''], onChange }) => {
+  const [questionList, setQuestionList] = useState(() => {
+    if (questions && questions.length > 0 && questions[0] !== '') {
+      return questions.map((q, index) => ({ id: index, text: q }))
+    }
+    return [{ id: 0, text: '' }]
+  })
 
   const addQuestion = () => {
-    const newQuestions = [...questionList, '']
+    const newId = Date.now() // Use timestamp for unique ID
+    const newQuestions = [...questionList, { id: newId, text: '' }]
     setQuestionList(newQuestions)
-    onChange(newQuestions)
+    onChange(newQuestions.map(q => q.text))
   }
 
-  const removeQuestion = (index) => {
+  const removeQuestion = (questionId) => {
     if (questionList.length > 1) {
-      const newQuestions = questionList.filter((_, i) => i !== index)
+      const newQuestions = questionList.filter(q => q.id !== questionId)
       setQuestionList(newQuestions)
-      onChange(newQuestions)
+      onChange(newQuestions.map(q => q.text))
     }
   }
 
-  const updateQuestion = (index, value) => {
-    const newQuestions = [...questionList]
-    newQuestions[index] = value
+  const updateQuestion = (questionId, value) => {
+    const newQuestions = questionList.map(q => 
+      q.id === questionId ? { ...q, text: value } : q
+    )
     setQuestionList(newQuestions)
-    onChange(newQuestions)
+    onChange(newQuestions.map(q => q.text))
+  }
+
+  const moveQuestion = (questionId, direction) => {
+    const currentIndex = questionList.findIndex(q => q.id === questionId)
+    if (
+      (direction === 'up' && currentIndex === 0) ||
+      (direction === 'down' && currentIndex === questionList.length - 1)
+    ) {
+      return
+    }
+
+    const newQuestions = [...questionList]
+    const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1
+    
+    // Swap questions
+    const temp = newQuestions[currentIndex]
+    newQuestions[currentIndex] = newQuestions[targetIndex]
+    newQuestions[targetIndex] = temp
+    
+    setQuestionList(newQuestions)
+    onChange(newQuestions.map(q => q.text))
   }
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <Label className="text-sm font-medium text-text-primary">
-          Questions for Customers
-        </Label>
-        <Button
+        <label className="text-sm font-medium text-gray-200">
+          Questions for Customers *
+        </label>
+        <button
           type="button"
-          variant="outline"
-          size="sm"
           onClick={addQuestion}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 px-3 py-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-600/30 rounded-lg text-sm transition-colors"
         >
           <FiPlus className="w-4 h-4" />
           Add Question
-        </Button>
+        </button>
       </div>
 
       <div className="space-y-3">
         {questionList.map((question, index) => (
-          <div key={index} className="flex items-center gap-3 group">
-            <div className="flex items-center text-text-muted cursor-grab">
-              <FiMoreVertical className="w-4 h-4" />
+          <div key={question.id} className="flex items-center gap-3 group bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+            <div className="flex flex-col gap-1">
+              <button
+                type="button"
+                onClick={() => moveQuestion(question.id, 'up')}
+                disabled={index === 0}
+                className="p-1 h-6 w-6 text-gray-400 hover:text-gray-200 disabled:opacity-30 bg-transparent border-0 cursor-pointer disabled:cursor-not-allowed"
+              >
+                ↑
+              </button>
+              <button
+                type="button"
+                onClick={() => moveQuestion(question.id, 'down')}
+                disabled={index === questionList.length - 1}
+                className="p-1 h-6 w-6 text-gray-400 hover:text-gray-200 disabled:opacity-30 bg-transparent border-0 cursor-pointer disabled:cursor-not-allowed"
+              >
+                ↓
+              </button>
             </div>
-            
+
             <div className="flex-1">
-              <Input
+              <input
                 type="text"
-                value={question}
-                onChange={(e) => updateQuestion(index, e.target.value)}
+                value={question.text}
+                onChange={(e) => updateQuestion(question.id, e.target.value)}
                 placeholder={`Question ${index + 1} (e.g., What do you love about our product?)`}
-                className="w-full"
+                className="w-full px-3 py-2 bg-gray-900/50 border border-gray-600 text-gray-100 placeholder:text-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
             {questionList.length > 1 && (
-              <Button
+              <button
                 type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => removeQuestion(index)}
-                className="opacity-0 group-hover:opacity-100 transition-opacity text-danger hover:text-danger hover:bg-danger/10"
+                onClick={() => removeQuestion(question.id)}
+                className="opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-300 hover:bg-red-500/10 p-2 rounded bg-transparent border-0 cursor-pointer"
               >
                 <FiTrash2 className="w-4 h-4" />
-              </Button>
+              </button>
             )}
           </div>
         ))}
       </div>
 
-      <div className="text-xs text-text-muted">
-        <p>💡 Tip: Ask specific questions to get actionable feedback. Keep them clear and concise.</p>
-      </div>
-
       {questionList.length === 0 && (
-        <div className="text-center py-8 text-text-muted">
-          <p>No questions added yet.</p>
-          <Button
+        <div className="text-center py-8 text-gray-400 bg-gray-800/30 rounded-lg border border-gray-700 border-dashed">
+          <p className="mb-3">No questions added yet.</p>
+          <button
             type="button"
-            variant="outline"
             onClick={addQuestion}
-            className="mt-2"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-600/30 rounded-lg transition-colors mx-auto"
           >
+            <FiPlus className="w-4 h-4" />
             Add Your First Question
-          </Button>
+          </button>
         </div>
       )}
+
+      <div className="text-xs text-gray-400 bg-blue-900/20 border border-blue-800/30 rounded-lg p-3">
+        <p>💡 <strong>Tip:</strong> Use the arrow buttons to reorder questions. Ask specific questions to get actionable feedback from your customers.</p>
+      </div>
     </div>
   )
 }

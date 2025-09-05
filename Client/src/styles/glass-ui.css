@@ -1,0 +1,159 @@
+/* Glass UI Base Utilities */
+.glass-base {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-subtle {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.glass-hover {
+  transition: all 150ms ease-out;
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.glass-pressed {
+  transform: translateY(0px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Animation utilities */
+.smooth-transition {
+  transition: all 150ms ease-out;
+}
+
+.micro-bounce {
+  animation: micro-bounce 0.3s ease-out;
+}
+
+@keyframes micro-bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Focus states for accessibility */
+.glass-focus:focus-visible {
+  outline: 2px solid #60A5FA;
+  outline-offset: 2px;
+}
+
+/* Drag and drop states */
+.drag-handle {
+  cursor: grab;
+  opacity: 0.6;
+  transition: opacity 150ms ease-out;
+}
+
+.drag-handle:hover {
+  opacity: 1;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.drag-item {
+  transition: all 200ms ease-out;
+}
+
+.drag-item.dragging {
+  opacity: 0.8;
+  transform: rotate(2deg);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.drop-zone {
+  border: 2px dashed rgba(96, 165, 250, 0.5);
+  background: rgba(96, 165, 250, 0.1);
+  animation: pulse-border 1s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: rgba(96, 165, 250, 0.5); }
+  50% { border-color: rgba(96, 165, 250, 0.8); }
+}
+
+/* Star rating animations */
+.star-rating {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.star-item {
+  transition: all 150ms ease-out;
+  cursor: pointer;
+}
+
+.star-item:hover {
+  transform: scale(1.1);
+}
+
+.star-item.filled {
+  color: #FFD700;
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.5));
+}
+
+.star-item.empty {
+  color: #A9B1C3;
+}
+
+.star-item.half {
+  background: linear-gradient(90deg, #FFD700 50%, #A9B1C3 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Loading states */
+.loading-shimmer {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .glass-base, .glass-subtle {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .smooth-transition,
+  .glass-hover,
+  .drag-item,
+  .star-item {
+    transition: none;
+  }
+  
+  .micro-bounce,
+  .loading-shimmer {
+    animation: none;
+  }
+}
