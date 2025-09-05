@@ -13,12 +13,12 @@ import {
   FiGlobe,
   FiStar
 } from 'react-icons/fi'
-import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
-import { Label } from '../components/ui/label'
-import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
-import { Badge } from '../components/ui/badge'
-import DynamicQuestions from '../components/forms/DynamicQuestions'
+import { Button } from '../Components/ui/button'
+import { Input } from '../Components/ui/input'
+import { Label } from '../Components/ui/label'
+import { Card, CardHeader, CardTitle, CardContent } from '../Components/ui/card'
+import { Badge } from '../Components/ui/badge'
+import DynamicQuestions from '../Components/forms/DynamicQuestions'
 import AnimatedBackground from '../Components/ui/AnimatedBackground/AnimatedBackground'
 
 const SpaceFormNew = () => {

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import StarRating from '../components/ui/star-rating';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Label } from '../components/ui/label';
-import { Textarea } from '../components/ui/textarea';
+import StarRating from '../Components/ui/star-rating';
+import { Button } from '../Components/ui/button';
+import { Input } from '../Components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '../Components/ui/card';
+import { Label } from '../Components/ui/label';
+import { Textarea } from '../Components/ui/textarea';
 import { Loader2, CheckCircle, AlertCircle, User, Mail, MessageSquare } from 'lucide-react';
 
 const SpacePage = () => {

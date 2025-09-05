@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../Components/ui/card';
 import { Button } from '../Components/ui';
 import { ArrowLeft, ExternalLink, Copy, Code } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
