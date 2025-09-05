@@ -10,14 +10,12 @@ import SpaceDetails from './Pages/SpaceDetails';
 import Profile from './Pages/Profile';
 import LandingPage from './Pages/LandingPage';
 import ResetPasswordPage from './Pages/ResetPasswordPage';
-import TestPage from './Components/TestPage';
 import ApiDocs from './Pages/ApiDocs';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/test" element={<TestPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create-space" element={<SpaceFormNew />} />
