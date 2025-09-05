@@ -11,10 +11,13 @@ dotenv.config();
 
 // CORS configuration for production
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || [
-    'http://localhost:5173',
-    'http://localhost:3000'
-  ],
+  origin: process.env.CORS_ORIGIN ? 
+    process.env.CORS_ORIGIN.split(',') : 
+    [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'https://nova-testimonial-client.vercel.app'
+    ],
   credentials: true,
   optionsSuccessStatus: 200
 };

@@ -1,5 +1,15 @@
-// API Configuration
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+// API Configuration - Auto-detect environment
+const getApiBaseUrl = () => {
+  // Check if we're in production (deployed)
+  if (import.meta.env.PROD) {
+    // Use environment variable if set, otherwise use a default production URL
+    return import.meta.env.VITE_API_BASE_URL || 'https://your-backend-url.railway.app';
+  }
+  // Development environment
+  return import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+};
+
+export const API_BASE_URL = getApiBaseUrl();
 
 // API Endpoints
 export const API_ENDPOINTS = {
