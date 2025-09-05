@@ -19,6 +19,7 @@ import { Label } from '../components/ui/label'
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
 import { Badge } from '../components/ui/badge'
 import DynamicQuestions from '../components/forms/DynamicQuestions'
+import AnimatedBackground from '../Components/ui/AnimatedBackground/AnimatedBackground'
 
 const SpaceFormNew = () => {
   const [formData, setFormData] = useState({
@@ -54,7 +55,26 @@ const SpaceFormNew = () => {
   }
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0])
+    const file = e.target.files[0]
+    if (file) {
+      // Validate file type
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
+      if (!validTypes.includes(file.type)) {
+        alert('Please select a valid image file (JPEG, PNG, GIF, or WebP)')
+        e.target.value = ''
+        return
+      }
+      
+      // Validate file size (max 5MB)
+      const maxSize = 5 * 1024 * 1024 // 5MB in bytes
+      if (file.size > maxSize) {
+        alert('Image size must be less than 5MB')
+        e.target.value = ''
+        return
+      }
+      
+      setImage(file)
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -178,12 +198,7 @@ const SpaceFormNew = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-bg">
-      {/* Animated background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-brand/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand/5 rounded-full blur-3xl"></div>
-      </div>
+    <AnimatedBackground variant="subtle">
 
       {/* Navigation */}
       <nav className="relative z-10 border-b border-border bg-surface/50 backdrop-blur-sm">
@@ -393,18 +408,18 @@ const SpaceFormNew = () => {
                   <Button 
                     type="submit" 
                     disabled={loading}
-                    className="w-full text-lg py-3"
+                    className="w-full text-lg py-6 h-16 transition-all duration-200 ease-out hover:scale-[1.02] hover:shadow-xl hover:shadow-brand/25 active:scale-[0.98] flex items-center justify-center gap-3 rounded-xl"
                     size="lg"
                   >
                     {loading ? (
-                      <div className="flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-bg mr-2"></div>
-                        Creating Space...
+                      <div className="flex items-center justify-center gap-3">
+                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-bg"></div>
+                        <span className="font-semibold">Creating Space...</span>
                       </div>
                     ) : (
                       <>
-                        <FiPlus className="mr-2 w-5 h-5" />
-                        Create Space
+                        <FiPlus className="w-6 h-6" />
+                        <span className="font-semibold">Create Space</span>
                       </>
                     )}
                   </Button>
@@ -464,7 +479,7 @@ const SpaceFormNew = () => {
           </Card>
         </div>
       )}
-    </div>
+    </AnimatedBackground>
   )
 }
 

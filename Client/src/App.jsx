@@ -11,6 +11,7 @@ import Profile from './Pages/Profile';
 import LandingPage from './Pages/LandingPage';
 import ResetPasswordPage from './Pages/ResetPasswordPage';
 import TestPage from './components/TestPage';
+import ApiDocs from './Pages/ApiDocs';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/create-space" element={<SpaceFormNew />} />
         <Route path="/create-space-old" element={<SpaceForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/api-docs" element={<ApiDocs />} />
         <Route path="/:publicUrl" element={<SpacePage />} />
         <Route path="/space-details" element={<SpaceDetails />} />
         <Route path="/profile" element={<Profile />} />

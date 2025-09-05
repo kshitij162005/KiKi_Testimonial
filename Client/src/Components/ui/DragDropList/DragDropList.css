@@ -1,0 +1,126 @@
+/* Drag and Drop List Styles */
+.drag-drop-list {
+  @apply space-y-2;
+}
+
+.drag-drop-list-dragging {
+  @apply bg-blue-500/10 rounded-lg p-2;
+  border: 2px dashed rgba(59, 130, 246, 0.5);
+  animation: pulse-border 1s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: rgba(59, 130, 246, 0.5); }
+  50% { border-color: rgba(59, 130, 246, 0.8); }
+}
+
+/* Drag Item Styles */
+.drag-item {
+  @apply flex items-center gap-3 p-3 rounded-lg transition-all duration-200 ease-out;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.drag-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.drag-item-dragging {
+  @apply opacity-80 rotate-1 z-50;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  transform: rotate(2deg) scale(1.02);
+}
+
+.drag-item-disabled {
+  @apply opacity-60 cursor-not-allowed;
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.drag-item-disabled:hover {
+  transform: none;
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Drag Handle Styles */
+.drag-handle {
+  @apply flex items-center justify-center w-6 h-6 rounded cursor-grab;
+  @apply text-gray-400 hover:text-gray-300 transition-colors duration-150;
+  opacity: 0.6;
+}
+
+.drag-handle:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.drag-handle-disabled {
+  @apply cursor-not-allowed opacity-30;
+}
+
+.drag-handle-disabled:hover {
+  opacity: 0.3;
+  background: transparent;
+}
+
+/* Drag Content */
+.drag-content {
+  @apply flex-1 min-w-0;
+}
+
+/* Focus states for accessibility */
+.drag-handle:focus-visible {
+  @apply outline-none ring-2 ring-blue-400 ring-offset-2 ring-offset-gray-900;
+}
+
+/* Keyboard navigation indicators */
+.drag-item:focus-within {
+  @apply ring-2 ring-blue-400 ring-offset-2 ring-offset-gray-900;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .drag-item {
+    @apply p-2 gap-2;
+  }
+  
+  .drag-handle {
+    @apply w-8 h-8;
+    touch-action: none;
+  }
+  
+  .drag-item-dragging {
+    transform: scale(1.05);
+    rotation: 0deg;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .drag-item,
+  .drag-handle {
+    transition: none;
+  }
+  
+  .drag-item-dragging {
+    transform: none;
+    rotation: 0deg;
+  }
+  
+  .pulse-border {
+    animation: none;
+  }
+}

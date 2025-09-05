@@ -1,0 +1,211 @@
+/* Coming Soon Badge Container */
+.coming-soon-container {
+  @apply relative inline-block;
+}
+
+/* Badge Base Styles */
+.coming-soon-badge {
+  @apply inline-flex items-center gap-2 rounded-full font-medium transition-all duration-150;
+  @apply border backdrop-blur-sm;
+}
+
+/* Variant Styles */
+.coming-soon-default {
+  @apply bg-yellow-500/20 text-yellow-300 border-yellow-500/30;
+}
+
+.coming-soon-subtle {
+  @apply bg-gray-500/20 text-gray-300 border-gray-500/30;
+}
+
+.coming-soon-prominent {
+  @apply bg-blue-500/20 text-blue-300 border-blue-500/30;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+/* Size Variants */
+.coming-soon-sm {
+  @apply px-2 py-1 text-xs;
+}
+
+.coming-soon-md {
+  @apply px-3 py-1.5 text-sm;
+}
+
+.coming-soon-lg {
+  @apply px-4 py-2 text-base;
+}
+
+/* Interactive States */
+.coming-soon-interactive {
+  @apply cursor-pointer;
+}
+
+.coming-soon-interactive:hover {
+  @apply transform scale-105;
+}
+
+.coming-soon-default.coming-soon-interactive:hover {
+  @apply bg-yellow-500/30 border-yellow-500/40;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+}
+
+.coming-soon-subtle.coming-soon-interactive:hover {
+  @apply bg-gray-500/30 border-gray-500/40;
+  box-shadow: 0 4px 16px rgba(107, 114, 128, 0.3);
+}
+
+.coming-soon-prominent.coming-soon-interactive:hover {
+  @apply bg-blue-500/30 border-blue-500/40;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+}
+
+.coming-soon-interactive:active {
+  @apply transform scale-95;
+}
+
+/* Icon Styles */
+.coming-soon-icon {
+  @apply w-4 h-4 animate-pulse;
+}
+
+.coming-soon-sm .coming-soon-icon {
+  @apply w-3 h-3;
+}
+
+.coming-soon-lg .coming-soon-icon {
+  @apply w-5 h-5;
+}
+
+/* Text Styles */
+.coming-soon-text {
+  @apply font-medium;
+}
+
+/* Tooltip Styles */
+.coming-soon-tooltip {
+  @apply absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-50;
+  @apply opacity-0 invisible transition-all duration-200;
+}
+
+.coming-soon-tooltip-active .coming-soon-tooltip {
+  @apply opacity-100 visible;
+}
+
+.coming-soon-tooltip-content {
+  @apply bg-gray-800 border border-gray-600 rounded-lg p-4 shadow-xl;
+  @apply w-64 text-left;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.coming-soon-tooltip-header {
+  @apply flex items-center gap-2 mb-2;
+}
+
+.coming-soon-tooltip-title {
+  @apply font-medium text-gray-200;
+}
+
+.coming-soon-tooltip-description {
+  @apply text-sm text-gray-300 mb-3 leading-relaxed;
+}
+
+.coming-soon-tooltip-date {
+  @apply text-sm text-blue-300 mb-2;
+}
+
+.coming-soon-tooltip-footer {
+  @apply pt-2 border-t border-gray-700;
+}
+
+/* Tooltip Arrow */
+.coming-soon-tooltip-arrow {
+  @apply absolute top-full left-1/2 transform -translate-x-1/2;
+  @apply w-0 h-0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #374151;
+}
+
+/* Focus States */
+.coming-soon-interactive:focus-visible {
+  @apply outline-none ring-2 ring-offset-2 ring-offset-gray-900;
+}
+
+.coming-soon-default.coming-soon-interactive:focus-visible {
+  @apply ring-yellow-400;
+}
+
+.coming-soon-subtle.coming-soon-interactive:focus-visible {
+  @apply ring-gray-400;
+}
+
+.coming-soon-prominent.coming-soon-interactive:focus-visible {
+  @apply ring-blue-400;
+}
+
+/* Animation for the clock icon */
+@keyframes gentle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.coming-soon-icon {
+  animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .coming-soon-tooltip-content {
+    @apply w-56 p-3;
+  }
+  
+  .coming-soon-interactive:hover {
+    transform: none;
+  }
+  
+  .coming-soon-interactive:active {
+    @apply transform scale-95;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .coming-soon-default {
+    @apply bg-yellow-400 text-black border-yellow-600;
+  }
+  
+  .coming-soon-subtle {
+    @apply bg-gray-300 text-black border-gray-600;
+  }
+  
+  .coming-soon-prominent {
+    @apply bg-blue-400 text-black border-blue-600;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .coming-soon-badge,
+  .coming-soon-tooltip {
+    transition: none;
+  }
+  
+  .coming-soon-interactive:hover,
+  .coming-soon-interactive:active {
+    transform: none;
+  }
+  
+  .coming-soon-icon {
+    animation: none;
+  }
+}
+
+/* Dark theme enhancements */
+.coming-soon-tooltip-content {
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}

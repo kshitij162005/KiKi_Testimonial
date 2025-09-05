@@ -238,6 +238,7 @@ router.get("/space/:publicUrl/feedbackDetails", async (req, res) => {
     const feedbackDetails = space.feedback.map((fb) => ({
       name: fb.name,
       email: fb.email,
+      rating: fb.rating,
       responses: fb.responses, 
       submittedAt: fb.submittedAt, 
     }));
@@ -245,6 +246,45 @@ router.get("/space/:publicUrl/feedbackDetails", async (req, res) => {
     res.status(200).json(feedbackDetails);
   } catch (error) {
     console.error("Error fetching feedback details:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Update Space Route
+router.put("/space/:publicUrl/update", upload.single("image"), async (req, res) => {
+  try {
+    const { publicUrl } = req.params;
+    const updateData = req.body;
+
+    const space = await Space.findOne({ publicUrl });
+    if (!space) {
+      return res.status(404).json({ message: "Space not found" });
+    }
+
+    // Handle image upload if provided
+    if (req.file) {
+      try {
+        const result = await cloudinary.uploader.upload(req.file.path);
+        updateData.img = result.secure_url;
+      } catch (uploadError) {
+        console.error("Error uploading image:", uploadError);
+        return res.status(500).json({ message: "Failed to upload image" });
+      }
+    }
+
+    // Update the space with provided data
+    const updatedSpace = await Space.findOneAndUpdate(
+      { publicUrl },
+      updateData,
+      { new: true, runValidators: true }
+    );
+
+    res.status(200).json({
+      message: "Space updated successfully",
+      space: updatedSpace
+    });
+  } catch (error) {
+    console.error("Error updating space:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
@@ -576,6 +616,160 @@ router.put("/reset-password", async (req, res) => {
 });
 
 
+
+// Organization API - Get all feedback data for all spaces under an organization (user)
+router.get("/api/organization/:userId/feedbacks", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Verify user exists
+    const user = await Users.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "Organization not found" });
+    }
+
+    // Get all spaces for this organization
+    const spaces = await Space.find({ user_Id: userId });
+
+    if (!spaces.length) {
+      return res.status(200).json({
+        organization: {
+          id: user._id,
+          name: `${user.firstName} ${user.lastName}`,
+          email: user.email
+        },
+        totalSpaces: 0,
+        totalFeedbacks: 0,
+        spaces: []
+      });
+    }
+
+    // Compile all feedback data
+    const organizationData = {
+      organization: {
+        id: user._id,
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.email
+      },
+      totalSpaces: spaces.length,
+      totalFeedbacks: 0,
+      spaces: []
+    };
+
+    spaces.forEach(space => {
+      const spaceData = {
+        spaceId: space._id,
+        spaceName: space.spacename,
+        publicUrl: space.publicUrl,
+        headerTitle: space.headerTitle,
+        customMessage: space.customMessage,
+        questions: space.questions,
+        starRatingsEnabled: space.starRatings,
+        createdAt: space.createdAt,
+        totalFeedbacks: space.feedback.length,
+        feedbacks: space.feedback.map(feedback => ({
+          feedbackId: feedback._id,
+          name: feedback.name,
+          email: feedback.email,
+          rating: feedback.rating,
+          responses: feedback.responses,
+          feedbackType: feedback.feedbackType,
+          video: feedback.video,
+          submittedAt: feedback.submittedAt
+        }))
+      };
+
+      organizationData.spaces.push(spaceData);
+      organizationData.totalFeedbacks += space.feedback.length;
+    });
+
+    res.status(200).json(organizationData);
+  } catch (error) {
+    console.error("Error fetching organization feedbacks:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Organization API - Get feedback data for a specific space
+router.get("/api/organization/:userId/space/:publicUrl/feedbacks", async (req, res) => {
+  try {
+    const { userId, publicUrl } = req.params;
+
+    // Verify user exists
+    const user = await Users.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "Organization not found" });
+    }
+
+    // Find the specific space belonging to this organization
+    const space = await Space.findOne({ publicUrl, user_Id: userId });
+
+    if (!space) {
+      return res.status(404).json({ message: "Space not found or doesn't belong to this organization" });
+    }
+
+    const spaceData = {
+      organization: {
+        id: user._id,
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.email
+      },
+      space: {
+        spaceId: space._id,
+        spaceName: space.spacename,
+        publicUrl: space.publicUrl,
+        headerTitle: space.headerTitle,
+        customMessage: space.customMessage,
+        questions: space.questions,
+        starRatingsEnabled: space.starRatings,
+        createdAt: space.createdAt,
+        image: space.img,
+        links: space.links
+      },
+      analytics: {
+        totalFeedbacks: space.feedback.length,
+        textFeedbacks: space.feedback.filter(fb => fb.feedbackType === "text").length,
+        videoFeedbacks: space.feedback.filter(fb => fb.feedbackType === "video").length,
+        averageRating: space.starRatings ? calculateAverageRating(space.feedback) : null,
+        ratingDistribution: space.starRatings ? calculateRatingDistribution(space.feedback) : null
+      },
+      feedbacks: space.feedback.map(feedback => ({
+        feedbackId: feedback._id,
+        name: feedback.name,
+        email: feedback.email,
+        rating: feedback.rating,
+        responses: feedback.responses,
+        feedbackType: feedback.feedbackType,
+        video: feedback.video,
+        submittedAt: feedback.submittedAt
+      }))
+    };
+
+    res.status(200).json(spaceData);
+  } catch (error) {
+    console.error("Error fetching space feedbacks:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Helper functions for analytics
+function calculateAverageRating(feedbacks) {
+  const ratedFeedbacks = feedbacks.filter(fb => fb.rating && fb.rating > 0);
+  if (ratedFeedbacks.length === 0) return 0;
+  
+  const totalRating = ratedFeedbacks.reduce((sum, fb) => sum + fb.rating, 0);
+  return Math.round((totalRating / ratedFeedbacks.length) * 10) / 10;
+}
+
+function calculateRatingDistribution(feedbacks) {
+  const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  feedbacks.forEach(fb => {
+    if (fb.rating && fb.rating >= 1 && fb.rating <= 5) {
+      distribution[fb.rating]++;
+    }
+  });
+  return distribution;
+}
 
 module.exports = router;
  

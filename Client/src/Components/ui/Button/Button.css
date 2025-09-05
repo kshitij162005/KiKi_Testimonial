@@ -1,0 +1,161 @@
+/* Base button styles with Glass UI */
+.btn-base {
+  @apply relative inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-150 ease-out;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2;
+  @apply disabled:pointer-events-none disabled:opacity-50;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Primary variant - Glass UI with blue accent */
+.btn-primary {
+  background: rgba(59, 130, 246, 0.2);
+  color: #E6EAF2;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0px);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+/* Secondary variant - Subtle glass */
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: #E6EAF2;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active:not(:disabled) {
+  transform: translateY(0px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Ghost variant - Minimal styling */
+.btn-ghost {
+  background: transparent;
+  color: #A9B1C3;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  color: #E6EAF2;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-ghost:active:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Destructive variant - Red accent */
+.btn-destructive {
+  background: rgba(239, 68, 68, 0.2);
+  color: #E6EAF2;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.btn-destructive:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 12px 40px rgba(239, 68, 68, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-destructive:active:not(:disabled) {
+  transform: translateY(0px);
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+}
+
+/* Size variants */
+.btn-sm {
+  @apply px-3 py-2 text-sm;
+  min-height: 36px;
+  gap: 6px;
+}
+
+.btn-md {
+  @apply px-4 py-3 text-base;
+  min-height: 44px;
+  gap: 8px;
+}
+
+.btn-lg {
+  @apply px-6 py-4 text-lg;
+  min-height: 52px;
+  gap: 10px;
+}
+
+/* Loading state */
+.btn-loading {
+  pointer-events: none;
+}
+
+.btn-spinner {
+  @apply w-4 h-4 animate-spin;
+}
+
+.btn-content {
+  @apply transition-opacity duration-150;
+}
+
+.btn-content-loading {
+  @apply opacity-70;
+}
+
+/* Disabled state */
+.btn-disabled {
+  @apply opacity-50 cursor-not-allowed;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Focus states for accessibility */
+.btn-base:focus-visible {
+  outline: 2px solid #60A5FA;
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .btn-base {
+    transition: none;
+  }
+  
+  .btn-spinner {
+    animation: none;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .btn-base {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+  
+  .btn-lg {
+    @apply px-5 py-2.5 text-base;
+    min-height: 44px;
+  }
+}
