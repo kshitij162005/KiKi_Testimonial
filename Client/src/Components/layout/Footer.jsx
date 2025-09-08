@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiMail, FiGithub, FiTwitter, FiLinkedin } from 'react-icons/fi';
-import KiKiLogo from "../../Images/KiKiLogo.svg";
+import KiKiLogo from "../../Images/kiki_logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -48,9 +48,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
-                <img src={KiKiLogo} alt="KiKi" className="w-6 h-6 rounded-lg" />
-              </div>
+              <img src={KiKiLogo} alt="KiKi" className="w-10 h-10 rounded-xl mb-6" />
               <span className="text-xl font-bold text-surface-100">KiKi</span>
             </div>
             <p className="text-surface-400 text-sm leading-relaxed mb-6 max-w-sm">

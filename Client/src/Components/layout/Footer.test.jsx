@@ -5,7 +5,7 @@ import { vi } from 'vitest';
 import Footer from './Footer';
 
 // Mock the image import
-vi.mock('../../Images/KiKiLogo.svg', () => ({
+vi.mock('../../Images/kiki_logo.png', () => ({
   default: 'kiki-logo.svg'
 }));
 

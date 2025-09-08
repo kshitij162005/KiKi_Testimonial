@@ -13,7 +13,7 @@ import {
   FiUsers,
   FiMessageSquare
 } from 'react-icons/fi';
-import KiKiLogo from "../Images/KiKiLogo.svg";
+import KiKiLogo from "../Images/kiki_logo.png";
 import Footer from '../Components/layout/Footer';
 import EnhancedBackground from '../Components/ui/EnhancedBackground/EnhancedBackground';
 
@@ -81,9 +81,7 @@ const LandingPage = () => {
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
-                <img src={KiKiLogo} alt="KiKi" className="w-6 h-6 rounded-lg" />
-              </div>
+              <img src={KiKiLogo} alt="KiKi" className="w-16 h-16 rounded-lg" />
               <span className="text-xl font-bold text-surface-100">KiKi</span>
             </div>
             <div className="hidden md:flex items-center space-x-4">
