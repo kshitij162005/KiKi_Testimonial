@@ -279,9 +279,9 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand to-brand-600 flex items-center justify-center">
-                  <span className="text-xl font-bold text-bg">N</span>
+                  <span className="text-xl font-bold text-bg">K</span>
                 </div>
-                <span className="text-xl font-bold text-gray-100">Nova</span>
+                <span className="text-xl font-bold text-gray-100">KiKi</span>
               </div>
 
               <div className="flex items-center space-x-4">

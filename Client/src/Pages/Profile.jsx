@@ -85,24 +85,41 @@ const Profile = () => {
       setUploadingImage(true);
       const userId = localStorage.getItem('userId');
       const formData = new FormData();
-      formData.append('profileImage', profileImage);
+      formData.append('image', profileImage);
 
-      const response = await fetch(`http://localhost:3000/user/${userId}/upload-image`, {
+      // First upload to cloudinary
+      const uploadResponse = await fetch('http://localhost:3000/upload', {
         method: 'POST',
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to upload image');
+      if (!uploadResponse.ok) {
+        throw new Error('Failed to upload image to cloudinary');
       }
 
-      const result = await response.json();
-      setUser(prev => ({ ...prev, profileImage: result.profileImage }));
-      setProfileImage(result.profileImage);
+      const uploadResult = await uploadResponse.json();
+      const imageUrl = uploadResult.data.secure_url;
+
+      // Then update user profile with the image URL
+      const updateResponse = await fetch(`http://localhost:3000/user/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ profileImage: imageUrl }),
+      });
+
+      if (!updateResponse.ok) {
+        throw new Error('Failed to update profile');
+      }
+
+      const updatedUser = await updateResponse.json();
+      setUser(prev => ({ ...prev, profileImage: imageUrl }));
+      setProfileImage(imageUrl);
       setImagePreview(null);
     } catch (err) {
       console.error('Error uploading image:', err);
-      alert('Failed to upload image');
+      alert('Failed to upload image: ' + err.message);
     } finally {
       setUploadingImage(false);
     }
@@ -308,7 +325,11 @@ const Profile = () => {
                       <h3 className="font-medium text-gray-200">Password</h3>
                       <p className="text-sm text-gray-400">Last updated: Never</p>
                     </div>
-                    <Button variant="secondary" size="sm">
+                    <Button 
+                      variant="secondary" 
+                      size="sm"
+                      onClick={() => navigate('/reset-password')}
+                    >
                       Change Password
                     </Button>
                   </div>

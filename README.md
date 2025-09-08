@@ -1,6 +1,6 @@
-# Nova_Testimonial
+# KiKi_Testimonial
 
-Welcome to **Nova_Testimonial**! This project is an innovative platform that allows users to collect, manage, and display video testimonials using the MERN stack (MongoDB, Express.js, React, Node.js).
+Welcome to **KiKi_Testimonial**! This project is an innovative platform that allows users to collect, manage, and display video testimonials using the MERN stack (MongoDB, Express.js, React, Node.js).
 
 ## Features
 
@@ -24,8 +24,8 @@ Follow these steps to get the project up and running locally:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/nova_testimonial.git
-cd nova_testimonial
+git clone https://github.com/your-username/kiki_testimonial.git
+cd kiki_testimonial
 ```
 
 ### 2. Install Dependencies
@@ -88,7 +88,7 @@ Once both the client and server are running, open your browser and go to:
 http://localhost:3000
 ```
 
-You will now be able to access the **Nova_Testimonial** platform and begin using the features.
+You will now be able to access the **KiKi_Testimonial** platform and begin using the features.
 
 ---
 

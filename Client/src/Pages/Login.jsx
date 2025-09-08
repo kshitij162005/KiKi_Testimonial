@@ -99,7 +99,7 @@ const Login = () => {
               </div>
               <h1 className="text-4xl font-bold text-surface-100 mb-4">
                 Welcome back to
-                <span className="block gradient-text">Nova</span>
+                <span className="block gradient-text">KiKi</span>
               </h1>
               <p className="text-lg text-surface-400 leading-relaxed">
                 Access your customer feedback dashboard and continue building stronger relationships with your customers.
@@ -131,9 +131,9 @@ const Login = () => {
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-8">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-white">N</span>
+              <span className="text-2xl font-bold text-white">K</span>
             </div>
-            <h1 className="text-2xl font-bold text-surface-100">Nova</h1>
+            <h1 className="text-2xl font-bold text-surface-100">KiKi</h1>
           </div>
 
           <div className="card p-8">

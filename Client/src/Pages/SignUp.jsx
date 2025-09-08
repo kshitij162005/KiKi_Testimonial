@@ -172,9 +172,9 @@ const SignUp = () => {
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-8">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-white">N</span>
+              <span className="text-2xl font-bold text-white">K</span>
             </div>
-            <h1 className="text-2xl font-bold text-surface-100">Nova</h1>
+            <h1 className="text-2xl font-bold text-surface-100">KiKi</h1>
           </div>
 
           <div className="card p-8">

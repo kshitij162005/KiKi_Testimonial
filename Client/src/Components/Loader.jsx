@@ -7,7 +7,7 @@ const Loader = () => {
         <div className="relative">
           {/* Animated logo */}
           <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center mx-auto mb-6 animate-pulse">
-            <span className="text-3xl font-bold text-white">N</span>
+            <span className="text-3xl font-bold text-white">K</span>
           </div>
           
           {/* Loading dots */}

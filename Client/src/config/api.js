@@ -3,7 +3,7 @@ const getApiBaseUrl = () => {
   // Check if we're in production (deployed)
   if (import.meta.env.PROD) {
     // Use environment variable if set, otherwise use a default production URL
-    return import.meta.env.VITE_API_BASE_URL || 'https://your-backend-url.railway.app';
+    return import.meta.env.VITE_API_BASE_URL || 'https://kiki-testimonial-backend.vercel.app';
   }
   // Development environment
   return import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';

@@ -537,8 +537,8 @@ router.post("/forget-password", async (req, res) => {
     // Send OTP email
     const mailOptions = {
       from: {
-        name: "Nova", // Customize this based on your application
-        address: process.env.EMAIL_SERVICE,
+        name: "KiKi", // Customize this based on your application
+        address: 'kotechakshitij@gmail.com',
       },
       to: email,
       subject: "OTP for password reset",

@@ -7,7 +7,7 @@ const TestPage = () => {
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-text-primary mb-2">
-            Nova Testimonial
+            KiKi Testimonial
           </h1>
           <p className="text-text-secondary">
             Testing our new design system components

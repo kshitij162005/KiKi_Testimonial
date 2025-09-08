@@ -1,53 +1,53 @@
-/* Nova Star Rating - Clean & Sharp Design */
-.nova-star-rating-container {
+/* KiKi Star Rating - Clean & Sharp Design */
+.kiki-star-rating-container {
   @apply flex items-center gap-3;
 }
 
-.nova-star-rating {
+.kiki-star-rating {
   @apply inline-flex items-center;
 }
 
-.nova-star-rating-readonly {
+.kiki-star-rating-readonly {
   @apply pointer-events-none;
 }
 
 /* Star Item Styles */
-.nova-star-item {
+.kiki-star-item {
   @apply relative transition-all duration-200 ease-out;
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900;
 }
 
-.nova-star-item-interactive:hover {
+.kiki-star-item-interactive:hover {
   transform: scale(1.15);
 }
 
-.nova-star-item-interactive:active {
+.kiki-star-item-interactive:active {
   transform: scale(0.95);
 }
 
-.nova-star-item-interactive:focus-visible {
+.kiki-star-item-interactive:focus-visible {
   transform: scale(1.1);
 }
 
 /* Hover effects for better UX */
-.nova-star-item-interactive:hover svg path {
+.kiki-star-item-interactive:hover svg path {
   stroke: #fbbf24 !important;
   stroke-width: 2;
   filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.8)) !important;
 }
 
 /* Star Rating Value */
-.nova-star-rating-value {
+.kiki-star-rating-value {
   @apply text-sm text-gray-300 font-semibold tracking-wide;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Star Display Component */
-.nova-star-display {
+.kiki-star-display {
   @apply flex items-center gap-3;
 }
 
-.nova-star-display-count {
+.kiki-star-display-count {
   @apply text-sm text-gray-400 font-medium;
 }
 
@@ -57,50 +57,50 @@
 }
 
 /* Size-specific enhancements */
-.nova-star-rating-small .nova-star-item {
+.kiki-star-rating-small .kiki-star-item {
   padding: 1px;
 }
 
-.nova-star-rating-medium .nova-star-item {
+.kiki-star-rating-medium .kiki-star-item {
   padding: 2px;
 }
 
-.nova-star-rating-large .nova-star-item {
+.kiki-star-rating-large .kiki-star-item {
   padding: 3px;
 }
 
 /* Loading state */
-.nova-star-rating-loading .nova-star-item {
+.kiki-star-rating-loading .kiki-star-item {
   @apply opacity-60 animate-pulse;
 }
 
 /* Error state */
-.nova-star-rating-error .nova-star-item svg path {
+.kiki-star-rating-error .kiki-star-item svg path {
   stroke: #ef4444 !important;
   fill: #ef4444 !important;
 }
 
 /* Mobile optimizations */
 @media (max-width: 768px) {
-  .nova-star-item-interactive {
+  .kiki-star-item-interactive {
     padding: 4px;
     touch-action: manipulation;
   }
   
-  .nova-star-item-interactive:hover {
+  .kiki-star-item-interactive:hover {
     transform: scale(1.2);
   }
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .nova-star-item svg path[fill="#fbbf24"] {
+  .kiki-star-item svg path[fill="#fbbf24"] {
     fill: #fcd34d !important;
     stroke: #fcd34d !important;
     stroke-width: 2;
   }
   
-  .nova-star-item svg path[stroke="#6b7280"] {
+  .kiki-star-item svg path[stroke="#6b7280"] {
     stroke: #9ca3af !important;
     stroke-width: 2;
   }
@@ -108,44 +108,44 @@
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  .nova-star-item {
+  .kiki-star-item {
     transition: none;
   }
   
-  .nova-star-item-interactive:hover,
-  .nova-star-item-interactive:active,
-  .nova-star-item-interactive:focus-visible {
+  .kiki-star-item-interactive:hover,
+  .kiki-star-item-interactive:active,
+  .kiki-star-item-interactive:focus-visible {
     transform: none;
   }
   
-  .nova-star-rating-loading .nova-star-item {
+  .kiki-star-rating-loading .kiki-star-item {
     animation: none;
   }
 }
 
 /* Dark theme optimizations */
 @media (prefers-color-scheme: dark) {
-  .nova-star-rating-value {
+  .kiki-star-rating-value {
     @apply text-gray-100;
   }
   
-  .nova-star-display-count {
+  .kiki-star-display-count {
     @apply text-gray-300;
   }
 }
 
 /* Accessibility improvements */
-.nova-star-item:focus-visible {
+.kiki-star-item:focus-visible {
   outline: 2px solid #fbbf24;
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 /* Smooth transitions for better UX */
-.nova-star-item svg {
+.kiki-star-item svg {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.nova-star-item svg path {
+.kiki-star-item svg path {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }

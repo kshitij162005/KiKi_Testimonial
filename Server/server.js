@@ -16,7 +16,7 @@ const corsOptions = {
     [
       'http://localhost:5173',
       'http://localhost:3000',
-      'https://nova-testimonial-client.vercel.app'
+      'https://kiki-testimonial-client.vercel.app'
     ],
   credentials: true,
   optionsSuccessStatus: 200

@@ -1,8 +1,8 @@
-# Nova Testimonial - Modern Setup
+# Kiki Testimonial - Modern Setup
 
 ## Project Foundation Complete ✅
 
-This document outlines the completed setup for the Nova Testimonial redesign project.
+This document outlines the completed setup for the Kiki Testimonial redesign project.
 
 ### Technology Stack
 

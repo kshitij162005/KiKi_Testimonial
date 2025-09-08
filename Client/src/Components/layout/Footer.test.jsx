@@ -5,8 +5,8 @@ import { vi } from 'vitest';
 import Footer from './Footer';
 
 // Mock the image import
-vi.mock('../../Images/Designer.png', () => ({
-  default: 'designer-logo.png'
+vi.mock('../../Images/KiKiLogo.svg', () => ({
+  default: 'kiki-logo.svg'
 }));
 
 const FooterWithRouter = () => (
@@ -19,15 +19,15 @@ describe('Footer Component', () => {
   test('renders footer with brand logo and name', () => {
     render(<FooterWithRouter />);
     
-    expect(screen.getByText('Nova')).toBeInTheDocument();
-    expect(screen.getByAltText('Nova')).toBeInTheDocument();
+    expect(screen.getByText('Kiki')).toBeInTheDocument();
+    expect(screen.getByAltText('Kiki')).toBeInTheDocument();
   });
 
   test('displays current year in copyright', () => {
     render(<FooterWithRouter />);
     
     const currentYear = new Date().getFullYear();
-    expect(screen.getByText(`© ${currentYear} Nova Testimonial. All rights reserved.`)).toBeInTheDocument();
+    expect(screen.getByText(`© ${currentYear} Kiki Testimonial. All rights reserved.`)).toBeInTheDocument();
   });
 
   test('renders all footer link sections', () => {
@@ -102,7 +102,7 @@ describe('Footer Component', () => {
     render(<FooterWithRouter />);
     
     const emailLink = screen.getByLabelText('Email');
-    expect(emailLink).toHaveAttribute('href', 'mailto:hello@nova-testimonial.com');
+    expect(emailLink).toHaveAttribute('href', 'mailto:hello@kiki-testimonial.com');
   });
 
   test('footer text links have proper hover states', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiMail, FiGithub, FiTwitter, FiLinkedin } from 'react-icons/fi';
-import Designer from "../../Images/Designer.png";
+import KiKiLogo from "../../Images/KiKiLogo.svg";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -37,7 +37,7 @@ const Footer = () => {
     { name: 'Twitter', href: '#twitter', icon: FiTwitter },
     { name: 'LinkedIn', href: '#linkedin', icon: FiLinkedin },
     { name: 'GitHub', href: '#github', icon: FiGithub },
-    { name: 'Email', href: 'mailto:hello@nova-testimonial.com', icon: FiMail }
+    { name: 'Email', href: 'mailto:hello@kiki-testimonial.com', icon: FiMail }
   ];
 
   return (
@@ -49,9 +49,9 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
-                <img src={Designer} alt="Nova" className="w-6 h-6 rounded-lg" />
+                <img src={KiKiLogo} alt="KiKi" className="w-6 h-6 rounded-lg" />
               </div>
-              <span className="text-xl font-bold text-surface-100">Nova</span>
+              <span className="text-xl font-bold text-surface-100">KiKi</span>
             </div>
             <p className="text-surface-400 text-sm leading-relaxed mb-6 max-w-sm">
               Simple, secure testimonial collection platform for businesses of all sizes. 
@@ -147,7 +147,7 @@ const Footer = () => {
         <div className="pt-8 border-t border-surface-800">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="text-sm text-surface-500 mb-4 md:mb-0">
-              © {currentYear} Nova Testimonial. All rights reserved.
+              © {currentYear} Kiki Testimonial. All rights reserved.
             </div>
             <div className="flex items-center space-x-6 text-sm text-surface-500">
               <span>Made with ❤️ for better customer feedback</span>
