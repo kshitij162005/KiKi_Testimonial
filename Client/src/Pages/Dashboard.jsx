@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import KiKiLogo from "../Images/kiki_logo.png";
 import {
   FiUser,
   FiPlus,
@@ -278,9 +279,7 @@ const Dashboard = () => {
           <div className="px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand to-brand-600 flex items-center justify-center">
-                  <span className="text-xl font-bold text-bg">K</span>
-                </div>
+                <img src={KiKiLogo} alt="KiKi" className="w-10 h-10 rounded-lg" />
                 <span className="text-xl font-bold text-gray-100">KiKi</span>
               </div>
 

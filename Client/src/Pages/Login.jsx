@@ -13,6 +13,7 @@ import {
   FiShield,
   FiTrendingUp
 } from 'react-icons/fi';
+import KiKiLogo from "../Images/kiki_logo.png";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -94,9 +95,7 @@ const Login = () => {
         <div className="w-full bg-gradient-to-br from-surface-900/50 to-surface-800/50 backdrop-blur-sm border-r border-surface-800 p-12 flex flex-col justify-center">
           <div className="max-w-md">
             <div className="mb-12">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center mb-6">
-                <span className="text-2xl font-bold text-white">N</span>
-              </div>
+              <img src={KiKiLogo} alt="KiKi" className="w-16 h-16 rounded-2xl mb-6" />
               <h1 className="text-4xl font-bold text-surface-100 mb-4">
                 Welcome back to
                 <span className="block gradient-text">KiKi</span>
@@ -130,9 +129,7 @@ const Login = () => {
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
           <div className="lg:hidden text-center mb-8">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-white">K</span>
-            </div>
+            <img src={KiKiLogo} alt="KiKi" className="w-16 h-16 rounded-2xl mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-surface-100">KiKi</h1>
           </div>
 

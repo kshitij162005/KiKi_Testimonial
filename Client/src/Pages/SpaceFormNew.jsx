@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import KiKiLogo from "../Images/kiki_logo.png";
 import { 
   FiArrowLeft, 
   FiPlus, 
@@ -213,10 +214,8 @@ const SpaceFormNew = () => {
               >
                 <FiArrowLeft className="w-5 h-5" />
               </Button>
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand to-brand-600 flex items-center justify-center">
-                <span className="text-xl font-bold text-bg">K</span>
-              </div>
-              <span className="text-xl font-bold text-text-primary">KiKi</span>
+              <img src={KiKiLogo} alt="KiKi" className="w-16 h-16 rounded-2xl mx-auto" />
+                <span className="text-xl font-bold text-surface-100">KiKi</span>
             </div>
             <Badge variant="secondary">Create New Space</Badge>
           </div>
@@ -285,6 +284,7 @@ const SpaceFormNew = () => {
 
             {/* Right Side - Form */}
             <div className="lg:col-span-2">
+
               <Card className="p-8">
                 <div className="mb-8">
                   <h2 className="text-2xl font-bold text-text-primary mb-2">Space Configuration</h2>
