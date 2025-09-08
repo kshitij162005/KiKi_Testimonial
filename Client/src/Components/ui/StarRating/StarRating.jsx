@@ -80,12 +80,12 @@ const StarRating = ({
   );
 
   return (
-    <div className={cn('nova-star-rating-container', className)}>
+    <div className={cn('kiki-star-rating-container', className)}>
       <div 
         className={cn(
-          'nova-star-rating',
-          `nova-star-rating-${size}`,
-          { 'nova-star-rating-readonly': readonly }
+          'kiki-star-rating',
+          `kiki-star-rating-${size}`,
+          { 'kiki-star-rating-readonly': readonly }
         )}
         style={{ gap: currentSize.gap }}
         role={readonly ? 'img' : 'radiogroup'}
@@ -100,11 +100,11 @@ const StarRating = ({
               key={index}
               type="button"
               className={cn(
-                'nova-star-item',
-                `nova-star-item-${starValue}`,
+                'kiki-star-item',
+                `kiki-star-item-${starValue}`,
                 {
-                  'nova-star-item-interactive': !readonly,
-                  'nova-star-item-readonly': readonly
+                  'kiki-star-item-interactive': !readonly,
+                  'kiki-star-item-readonly': readonly
                 }
               )}
               onClick={() => handleClick(rating)}
@@ -134,7 +134,7 @@ const StarRating = ({
       </div>
       
       {showValue && (
-        <span className="nova-star-rating-value">
+        <span className="kiki-star-rating-value">
           {value.toFixed(1)} / {maxRating}
         </span>
       )}
@@ -151,7 +151,7 @@ export const StarDisplay = ({
   className 
 }) => {
   return (
-    <div className={cn('nova-star-display', className)}>
+    <div className={cn('kiki-star-display', className)}>
       <StarRating 
         value={rating} 
         readonly 
@@ -159,7 +159,7 @@ export const StarDisplay = ({
         allowHalf 
       />
       {showCount && count !== undefined && (
-        <span className="nova-star-display-count">
+        <span className="kiki-star-display-count">
           ({count} review{count !== 1 ? 's' : ''})
         </span>
       )}

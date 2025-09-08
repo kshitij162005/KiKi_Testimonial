@@ -46,7 +46,7 @@ async function fixQuestionsFormat() {
 
 // Run migration if this file is executed directly
 if (require.main === module) {
-  mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nova_testimonial')
+  mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/kiki_testimonial')
     .then(() => {
       console.log('Connected to MongoDB');
       return fixQuestionsFormat();

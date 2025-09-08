@@ -178,9 +178,9 @@ const SpaceForm = () => {
                 <FiArrowLeft className="w-5 h-5" />
               </button>
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
-                <span className="text-xl font-bold text-white">N</span>
+                <span className="text-xl font-bold text-white">K</span>
               </div>
-              <span className="text-xl font-bold text-surface-100">Nova</span>
+              <span className="text-xl font-bold text-surface-100">KiKi</span>
             </div>
             <div className="text-sm text-surface-400">
               Create New Space
