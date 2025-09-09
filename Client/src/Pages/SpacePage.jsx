@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../Components/ui/card'
 import { Label } from '../Components/ui/label';
 import { Textarea } from '../Components/ui/textarea';
 import { Loader2, CheckCircle, AlertCircle, User, Mail, MessageSquare } from 'lucide-react';
+import { API_ENDPOINTS } from '../config/api.js';
 
 const SpacePage = () => {
   const { publicUrl } = useParams();
@@ -27,7 +28,7 @@ const SpacePage = () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await fetch(`http://localhost:3000/space/${publicUrl}`);
+        const response = await fetch(API_ENDPOINTS.SPACE_BY_URL(publicUrl));
         if (!response.ok) {
           throw new Error('Space not found');
         }
@@ -75,7 +76,7 @@ const SpacePage = () => {
         feedbackType: 'text'
       };
 
-      const response = await fetch(`http://localhost:3000/space/${publicUrl}/feedback`, {
+      const response = await fetch(API_ENDPOINTS.SUBMIT_FEEDBACK(publicUrl), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

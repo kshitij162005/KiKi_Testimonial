@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API_ENDPOINTS } from "../config/api.js";
 import { useNavigate, Link } from "react-router-dom";
 import Loader from "../Components/Loader";
 import Modal from "../Components/Modal";
@@ -41,7 +42,7 @@ const SignUp = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/SignUp",
+        API_ENDPOINTS.SIGNUP,
         {
           firstName: form.firstName,
           lastName: form.lastName,

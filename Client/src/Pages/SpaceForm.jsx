@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from '../config/api.js';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
   FiArrowLeft, 
@@ -76,7 +78,7 @@ const SpaceForm = () => {
         formDataObj.append('image', image);
       }
 
-      const response = await fetch('http://localhost:3000/addSpace', {
+      const response = await fetch(API_ENDPOINTS.ADD_SPACE, {
         method: 'POST',
         body: formDataObj,
       });
@@ -96,7 +98,7 @@ const SpaceForm = () => {
   
         sessionStorage.setItem('generatedLink', link);
   
-        await fetch(`http://localhost:3000/space/${formData.publicUrl}/addLink`, {
+        await fetch(API_ENDPOINTS.ADD_LINK(formData.publicUrl), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

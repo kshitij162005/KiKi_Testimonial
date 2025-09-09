@@ -5,6 +5,7 @@ import { Copy, CheckCircle, ExternalLink, Users, MessageSquare, ArrowLeft, Trend
 import { Button, StarRating, StarDisplay, EditableField, SearchInput } from '../Components/ui';
 import SentimentAnalysis from '../Components/dashboard/SentimentAnalysis/SentimentAnalysis';
 import AnimatedBackground from '../Components/ui/AnimatedBackground/AnimatedBackground';
+import { API_ENDPOINTS, API_BASE_URL } from '../config/api.js';
 import "./Styles/SpaceDetails.css";
 
 const SpaceDetails = () => {
@@ -120,7 +121,7 @@ const SpaceDetails = () => {
 
   const handleSaveSpaceName = async (newName) => {
     try {
-      const response = await fetch(`http://localhost:3000/space/${publicUrl}/update`, {
+      const response = await fetch(API_ENDPOINTS.UPDATE_SPACE(publicUrl), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -142,7 +143,7 @@ const SpaceDetails = () => {
 
   const handleSaveHeaderTitle = async (newTitle) => {
     try {
-      const response = await fetch(`http://localhost:3000/space/${publicUrl}/update`, {
+      const response = await fetch(API_ENDPOINTS.UPDATE_SPACE(publicUrl), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -164,7 +165,7 @@ const SpaceDetails = () => {
 
   const handleSaveCustomMessage = async (newMessage) => {
     try {
-      const response = await fetch(`http://localhost:3000/space/${publicUrl}/update`, {
+      const response = await fetch(API_ENDPOINTS.UPDATE_SPACE(publicUrl), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -192,7 +193,7 @@ const SpaceDetails = () => {
 
     const fetchSpaceDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/space/${publicUrl}`);
+        const response = await fetch(API_ENDPOINTS.SPACE_BY_URL(publicUrl));
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -200,7 +201,7 @@ const SpaceDetails = () => {
         setSpace(result);
 
         // Fetch feedback details
-        const feedbackResponse = await fetch(`http://localhost:3000/space/${publicUrl}/feedbackDetails`);
+        const feedbackResponse = await fetch(API_ENDPOINTS.FEEDBACK_DETAILS(publicUrl));
         if (!feedbackResponse.ok) {
           throw new Error(`HTTP error! status: ${feedbackResponse.status}`);
         }
@@ -262,7 +263,7 @@ const SpaceDetails = () => {
     );
   }
 
-  const feedbackUrl = `http://localhost:5173/${space.publicUrl}`;
+  const feedbackUrl = `${window.location.origin}/${space.publicUrl}`;
 
   return (
     <AnimatedBackground>
@@ -382,10 +383,10 @@ const SpaceDetails = () => {
                 </p>
                 <div className="flex items-center gap-3 p-3 bg-gray-800 rounded-lg">
                   <code className="flex-1 text-green-400 text-xs break-all font-mono">
-                    {`http://localhost:3000/api/organization/${JSON.parse(sessionStorage.getItem('selectedSpace'))?.user_Id || 'USER_ID'}/space/${space.publicUrl}/feedbacks`}
+                    {API_ENDPOINTS.ORG_SPACE_FEEDBACKS(JSON.parse(sessionStorage.getItem('selectedSpace'))?.user_Id || 'USER_ID', space.publicUrl)}
                   </code>
                   <Button
-                    onClick={() => copyApiUrl(`http://localhost:3000/api/organization/${JSON.parse(sessionStorage.getItem('selectedSpace'))?.user_Id || 'USER_ID'}/space/${space.publicUrl}/feedbacks`)}
+                    onClick={() => copyApiUrl(API_ENDPOINTS.ORG_SPACE_FEEDBACKS(JSON.parse(sessionStorage.getItem('selectedSpace'))?.user_Id || 'USER_ID', space.publicUrl))}
                     size="sm"
                     variant="outline"
                     className={`shrink-0 transition-all duration-200 ${apiCopied ? 'bg-green-600 border-green-600 text-white' : ''}`}

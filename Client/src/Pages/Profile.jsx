@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { API_ENDPOINTS } from '../config/api.js';
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, User, Mail, Phone, Shield, Camera, Save, X } from 'lucide-react';
 import { Button, EditableField } from '../Components/ui';
@@ -23,7 +24,7 @@ const Profile = () => {
           throw new Error('User ID not found in local storage');
         }
 
-        const response = await fetch(`http://localhost:3000/user/${userId}`);
+        const response = await fetch(API_ENDPOINTS.USER_BY_ID(userId));
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -45,7 +46,7 @@ const Profile = () => {
   const handleSaveField = async (field, value) => {
     try {
       const userId = localStorage.getItem('userId');
-      const response = await fetch(`http://localhost:3000/user/${userId}`, {
+      const response = await fetch(API_ENDPOINTS.USER_BY_ID(userId), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +89,7 @@ const Profile = () => {
       formData.append('image', profileImage);
 
       // First upload to cloudinary
-      const uploadResponse = await fetch('http://localhost:3000/upload', {
+      const uploadResponse = await fetch(API_ENDPOINTS.UPLOAD_IMAGE, {
         method: 'POST',
         body: formData,
       });
@@ -101,7 +102,7 @@ const Profile = () => {
       const imageUrl = uploadResult.data.secure_url;
 
       // Then update user profile with the image URL
-      const updateResponse = await fetch(`http://localhost:3000/user/${userId}`, {
+      const updateResponse = await fetch(API_ENDPOINTS.USER_BY_ID(userId), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

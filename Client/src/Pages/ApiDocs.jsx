@@ -52,7 +52,7 @@ const ApiDocs = () => {
             </p>
             <div className="bg-blue-900/20 border border-blue-800/30 rounded-lg p-4">
               <h4 className="text-blue-200 font-medium mb-2">Base URL</h4>
-              <code className="text-green-400 text-sm">http://localhost:3000/api</code>
+              <code className="text-green-400 text-sm">{API_BASE_URL}/api</code>
             </div>
           </CardContent>
         </Card>
