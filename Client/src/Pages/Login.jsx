@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config/api.js';
 import { useNavigate, Link } from 'react-router-dom';
 import Loader from '../Components/Loader'; 
 import Modal from '../Components/Modal'; 
@@ -37,7 +38,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3000/login', {
+      const response = await axios.post(API_ENDPOINTS.LOGIN, {
         email: form.email,
         password: form.password,
       });

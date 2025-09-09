@@ -25,6 +25,7 @@ import palmGif from "../Images/palm.gif";
 import angryGif from "../Images/angry.gif";
 import cryingGif from "../Images/crying.gif";
 import treeImg from "../Images/Tree.svg";
+import { API_ENDPOINTS } from "../config/api.js";
 
 // Magical Create Button Component
 const MagicalCreateButton = () => {
@@ -157,7 +158,7 @@ const Dashboard = () => {
         }
 
         const response = await fetch(
-          `http://localhost:3000/getSpacesByUserId/${userId}`
+          API_ENDPOINTS.GET_SPACES_BY_USER(userId)
         );
 
         if (response.status === 404) {
@@ -178,7 +179,7 @@ const Dashboard = () => {
           if (result.length > 0) {
             // Fetch feedback counts and all feedback for sentiment analysis
             const feedbackCountsResponse = await fetch(
-              `http://localhost:3000/space/${result[0].publicUrl}/feedbackCounts`
+              API_ENDPOINTS.FEEDBACK_COUNTS(result[0].publicUrl)
             );
             if (!feedbackCountsResponse.ok) {
               throw new Error(
@@ -192,7 +193,7 @@ const Dashboard = () => {
             // Fetch all feedback for sentiment analysis
             try {
               const allFeedbackResponse = await fetch(
-                `http://localhost:3000/space/${result[0].publicUrl}/feedbackDetails`
+                API_ENDPOINTS.FEEDBACK_DETAILS(result[0].publicUrl)
               );
               if (allFeedbackResponse.ok) {
                 const feedbackData = await allFeedbackResponse.json();
@@ -467,14 +468,10 @@ const Dashboard = () => {
                   </div>
                   <div className="flex items-center gap-3">
                     <code className="flex-1 text-green-400 text-sm break-all font-mono">
-                      {`http://localhost:3000/api/organization/${
-                        localStorage.getItem("userId") || "USER_ID"
-                      }/feedbacks`}
+                      {API_ENDPOINTS.ORG_ALL_FEEDBACKS(localStorage.getItem("userId") || "USER_ID")}
                     </code>
                     <GlobalApiCopyButton
-                      url={`http://localhost:3000/api/organization/${
-                        localStorage.getItem("userId") || "USER_ID"
-                      }/feedbacks`}
+                      url={API_ENDPOINTS.ORG_ALL_FEEDBACKS(localStorage.getItem("userId") || "USER_ID")}
                     />
                   </div>
                 </div>

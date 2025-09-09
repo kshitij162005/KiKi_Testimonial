@@ -21,6 +21,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../Components/ui/card'
 import { Badge } from '../Components/ui/badge'
 import DynamicQuestions from '../Components/forms/DynamicQuestions'
 import AnimatedBackground from '../Components/ui/AnimatedBackground/AnimatedBackground'
+import { API_ENDPOINTS, API_BASE_URL } from '../config/api.js'
 
 const SpaceFormNew = () => {
   const [formData, setFormData] = useState({
@@ -116,7 +117,7 @@ const SpaceFormNew = () => {
         formDataObj.append('image', image)
       }
 
-      const response = await fetch('http://localhost:3000/addSpace', {
+      const response = await fetch(API_ENDPOINTS.ADD_SPACE, {
         method: 'POST',
         body: formDataObj,
       })
@@ -136,7 +137,7 @@ const SpaceFormNew = () => {
   
         sessionStorage.setItem('generatedLink', link)
   
-        await fetch(`http://localhost:3000/space/${formData.publicUrl}/addLink`, {
+        await fetch(API_ENDPOINTS.ADD_LINK(formData.publicUrl), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
