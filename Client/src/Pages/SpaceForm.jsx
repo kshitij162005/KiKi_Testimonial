@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import React, { useState, useEffect } from 'react';
 import { API_ENDPOINTS } from '../config/api.js';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
