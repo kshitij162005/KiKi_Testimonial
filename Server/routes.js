@@ -128,7 +128,8 @@ router.post("/addSpace", upload.single("image"), async (req, res) => {
     });
 
     const savedSpace = await newSpace.save();
-    const spaceLink = `http://localhost:5173/${publicUrl}`;
+    const frontendBaseUrl = process.env.FRONTEND_BASE_URL || 'http://localhost:5173';
+    const spaceLink = `${frontendBaseUrl.replace(/\/$/, '')}/${publicUrl}`;
 
     console.log('Generated link:', spaceLink);
 
