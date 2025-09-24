@@ -11,17 +11,21 @@ dotenv.config();
 
 // CORS configuration for production
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN ? 
-    process.env.CORS_ORIGIN.split(',') : 
+  origin: process.env.CORS_ORIGIN ?
+    process.env.CORS_ORIGIN.split(',') :
     [
       'http://localhost:5173',
       'http://localhost:3000',
       'https://kiki-testimonial-client.vercel.app'
     ],
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
+// Handle preflight early for all routes (important on serverless platforms)
+app.options('*', cors(corsOptions));
 app.use(cors(corsOptions));
 app.use(express.json());
 
