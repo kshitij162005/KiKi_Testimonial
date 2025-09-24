@@ -30,11 +30,15 @@ app.use(cors(corsOptions));
 
 // Safety net: explicitly set headers for allowed origins to avoid any drops
 const allowedOrigins = corsOptions.origin;
+const vercelDomainRegex = /\.vercel\.app$/i;
 app.use((req, res, next) => {
   const requestOrigin = req.headers.origin;
   const isAllowed = Array.isArray(allowedOrigins)
-    ? allowedOrigins.includes(requestOrigin)
-    : true; // if provided via env functionally equivalent
+    ? (
+        allowedOrigins.includes(requestOrigin) ||
+        (typeof requestOrigin === 'string' && (vercelDomainRegex.test(new URL(requestOrigin).hostname) || /localhost(:\d+)?$/i.test(new URL(requestOrigin).hostname)))
+      )
+    : true; // if provided via env, assume handled by cors()
 
   if (requestOrigin && isAllowed) {
     res.setHeader('Access-Control-Allow-Origin', requestOrigin);
@@ -42,10 +46,11 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Max-Age', '86400');
   }
 
   if (req.method === 'OPTIONS') {
-    return res.status(204).end();
+    return res.status(200).end();
   }
   next();
 });
