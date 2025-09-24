@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '../Components/ui/card';
 import { Copy, CheckCircle, ExternalLink, Users, MessageSquare, ArrowLeft, TrendingUp } from 'lucide-react';
 import { Button, StarRating, StarDisplay, EditableField, SearchInput } from '../Components/ui';
+import { List, Grid } from 'lucide-react';
 import SentimentAnalysis from '../Components/dashboard/SentimentAnalysis/SentimentAnalysis';
 import AnimatedBackground from '../Components/ui/AnimatedBackground/AnimatedBackground';
 import { API_ENDPOINTS, API_BASE_URL } from '../config/api.js';
@@ -17,6 +18,7 @@ const SpaceDetails = () => {
   const [apiCopied, setApiCopied] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [viewFormat, setViewFormat] = useState('list'); // New state for view format
   const navigate = useNavigate();
 
   // Get publicUrl from session storage
@@ -509,7 +511,7 @@ const SpaceDetails = () => {
           </div>
 
           {/* Feedback Section */}
-          <div className="xl:col-span-3">
+          <div className="xl:col-span-2">
             <Card className="bg-gray-900/60 border-gray-700 backdrop-blur-sm shadow-xl">
               <CardHeader className="pb-6">
                 <div className="flex items-center justify-between mb-4">
@@ -517,6 +519,24 @@ const SpaceDetails = () => {
                     <MessageSquare className="w-6 h-6 text-blue-400" />
                     Feedback Responses ({filteredFeedback.length}{feedback.length !== filteredFeedback.length ? ` of ${feedback.length}` : ''})
                   </CardTitle>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setViewFormat('list')}
+                      className={viewFormat === 'list' ? 'bg-gray-700' : ''}
+                    >
+                      <List className="w-5 h-5" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setViewFormat('grid')}
+                      className={viewFormat === 'grid' ? 'bg-gray-700' : ''}
+                    >
+                      <Grid className="w-5 h-5" />
+                    </Button>
+                  </div>
                 </div>
                 
                 {/* Search and Filter */}
@@ -561,7 +581,7 @@ const SpaceDetails = () => {
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-6 max-h-[700px] overflow-y-auto pr-2">
+                  <div className={viewFormat === 'list' ? "space-y-4 pr-2" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pr-2"}>
                     {filteredFeedback.map((fb, index) => (
                       <Card key={index} className="bg-gray-800/60 border-gray-600 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-200">
                         <CardContent className="p-6">
