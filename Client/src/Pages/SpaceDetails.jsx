@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../Components/ui/card'
 import { Copy, CheckCircle, ExternalLink, Users, MessageSquare, ArrowLeft, TrendingUp } from 'lucide-react';
 import { Button, StarRating, StarDisplay, EditableField, SearchInput } from '../Components/ui';
 import { List, Grid } from 'lucide-react';
-import SentimentAnalysis from '../Components/dashboard/SentimentAnalysis/SentimentAnalysis';
+// Sentiment Analysis removed as per new requirements
 import AnimatedBackground from '../Components/ui/AnimatedBackground/AnimatedBackground';
 import { API_ENDPOINTS, API_BASE_URL } from '../config/api.js';
 import "./Styles/SpaceDetails.css";
@@ -504,10 +504,7 @@ const SpaceDetails = () => {
               </CardContent>
             </Card>
 
-            {/* Sentiment Analysis */}
-            <div className="mt-6">
-              <SentimentAnalysis feedbackData={feedback} />
-            </div>
+            {/* Sentiment Analysis removed */}
           </div>
 
           {/* Feedback Section */}

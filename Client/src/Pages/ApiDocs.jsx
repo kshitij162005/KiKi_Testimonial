@@ -4,6 +4,7 @@ import { Button } from '../Components/ui';
 import { ArrowLeft, ExternalLink, Copy, Code } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AnimatedBackground from '../Components/ui/AnimatedBackground/AnimatedBackground';
+import { API_BASE_URL } from '../config/api.js';
 
 const ApiDocs = () => {
   const navigate = useNavigate();
