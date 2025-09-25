@@ -147,6 +147,7 @@ const Dashboard = () => {
   const [cookieConsent, setCookieConsent] = useState(null);
   const [viewMode, setViewMode] = useState("grid");
   const [allFeedback, setAllFeedback] = useState([]);
+  const [spaceSearch, setSpaceSearch] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -176,35 +177,22 @@ const Dashboard = () => {
             )}; path=/; max-age=${24 * 60 * 60}`;
           }
 
-          if (result.length > 0) {
-            // Fetch feedback counts and all feedback for sentiment analysis
-            const feedbackCountsResponse = await fetch(
-              API_ENDPOINTS.FEEDBACK_COUNTS(result[0].publicUrl)
-            );
-            if (!feedbackCountsResponse.ok) {
-              throw new Error(
-                `HTTP error! status: ${feedbackCountsResponse.status}`
-              );
-            }
-            const feedbackCounts = await feedbackCountsResponse.json();
-            setTextFeedbackCount(feedbackCounts.textFeedbackCount);
-            setVideoFeedbackCount(feedbackCounts.videoFeedbackCount);
-
-            // Fetch all feedback for sentiment analysis
-            try {
-              const allFeedbackResponse = await fetch(
-                API_ENDPOINTS.FEEDBACK_DETAILS(result[0].publicUrl)
-              );
-              if (allFeedbackResponse.ok) {
-                const feedbackData = await allFeedbackResponse.json();
-                setAllFeedback(feedbackData);
+          // Aggregate counts across all spaces
+          try {
+            let totalText = 0;
+            let totalVideo = 0;
+            for (const s of result) {
+              const resp = await fetch(API_ENDPOINTS.FEEDBACK_COUNTS(s.publicUrl));
+              if (resp.ok) {
+                const counts = await resp.json();
+                totalText += counts.textFeedbackCount || 0;
+                totalVideo += counts.videoFeedbackCount || 0;
               }
-            } catch (feedbackError) {
-              console.log(
-                "Could not fetch feedback for sentiment analysis:",
-                feedbackError
-              );
             }
+            setTextFeedbackCount(totalText);
+            setVideoFeedbackCount(totalVideo);
+          } catch (e) {
+            console.log('Failed to aggregate feedback counts', e);
           }
         }
       } catch (err) {
@@ -492,7 +480,13 @@ const Dashboard = () => {
                 <h2 className="text-2xl font-bold text-gray-100">
                   Your Spaces
                 </h2>
-                <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2">
+                <input
+                  value={spaceSearch}
+                  onChange={(e) => setSpaceSearch(e.target.value)}
+                  placeholder="Search spaces..."
+                  className="px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-blue-500"
+                />
                   <button
                     onClick={() => setViewMode("grid")}
                     className={`p-2 rounded-lg transition-all duration-200 ease-out hover:scale-105 ${
@@ -552,7 +546,9 @@ const Dashboard = () => {
                       : "space-y-4"
                   }
                 >
-                  {spaces.map((space) => (
+                  {spaces
+                    .filter(s => s.spacename.toLowerCase().includes(spaceSearch.toLowerCase()))
+                    .map((space) => (
                     <div
                       key={space._id}
                       onClick={() => handleSpaceClick(space)}
@@ -572,7 +568,7 @@ const Dashboard = () => {
                       </p>
                       <div className="flex items-center text-sm text-gray-500">
                         <FiActivity className="mr-2 w-4 h-4" />
-                        Active space
+                        {space.isActive ? 'Active space' : 'Deactivated'}
                       </div>
                     </div>
                   ))}

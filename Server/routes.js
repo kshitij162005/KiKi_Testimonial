@@ -196,6 +196,10 @@ router.post("/space/:publicUrl/feedback", async (req, res) => {
       return res.status(404).json({ message: "Space not found" });
     }
 
+    if (space.isActive === false) {
+      return res.status(403).json({ message: "Space is currently deactivated" });
+    }
+
     const feedback = {
       name,
       email,
@@ -223,6 +227,29 @@ router.post("/space/:publicUrl/feedback", async (req, res) => {
   } catch (error) {
     console.error("Error submitting feedback:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Update activation status
+router.put('/space/:publicUrl/activation', async (req, res) => {
+  try {
+    const { publicUrl } = req.params;
+    const { isActive } = req.body;
+    if (typeof isActive !== 'boolean') {
+      return res.status(400).json({ message: 'isActive must be boolean' });
+    }
+    const space = await Space.findOneAndUpdate(
+      { publicUrl },
+      { isActive },
+      { new: true }
+    );
+    if (!space) {
+      return res.status(404).json({ message: 'Space not found' });
+    }
+    return res.status(200).json({ message: 'Activation status updated', space });
+  } catch (error) {
+    console.error('Error updating activation status:', error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 });
 

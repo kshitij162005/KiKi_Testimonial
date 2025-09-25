@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '../Components/ui/card';
-import { Copy, CheckCircle, ExternalLink, Users, MessageSquare, ArrowLeft, TrendingUp } from 'lucide-react';
+import { Copy, CheckCircle, ExternalLink, Users, MessageSquare, ArrowLeft, TrendingUp, Power } from 'lucide-react';
 import { Button, StarRating, StarDisplay, EditableField, SearchInput } from '../Components/ui';
 import { List, Grid } from 'lucide-react';
 // Sentiment Analysis removed as per new requirements
@@ -19,6 +19,8 @@ const SpaceDetails = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [viewFormat, setViewFormat] = useState('list'); // New state for view format
+  const [visibleCount, setVisibleCount] = useState(12);
+  const [savingActivation, setSavingActivation] = useState(false);
   const navigate = useNavigate();
 
   // Get publicUrl from session storage
@@ -121,6 +123,15 @@ const SpaceDetails = () => {
     }
   };
 
+  const loadMore = () => {
+    setVisibleCount((c) => c + 12);
+  };
+
+  useEffect(() => {
+    // reset pagination when filters/search change
+    setVisibleCount(12);
+  }, [searchQuery, selectedFilters, viewFormat]);
+
   const handleSaveSpaceName = async (newName) => {
     try {
       const response = await fetch(API_ENDPOINTS.UPDATE_SPACE(publicUrl), {
@@ -184,6 +195,26 @@ const SpaceDetails = () => {
     } catch (error) {
       console.error('Error updating custom message:', error);
       throw error;
+    }
+  };
+
+  const toggleActivation = async () => {
+    try {
+      setSavingActivation(true);
+      const response = await fetch(API_ENDPOINTS.UPDATE_SPACE_ACTIVATION(publicUrl), {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isActive: !space.isActive })
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update activation status');
+      }
+      const data = await response.json();
+      setSpace(prev => ({ ...prev, isActive: data.space.isActive }));
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setSavingActivation(false);
     }
   };
 
@@ -293,7 +324,7 @@ const SpaceDetails = () => {
               </div>
             </div>
             
-            {/* Overall Rating Display */}
+            {/* Overall Rating Display and Activation Toggle */}
             {ratingData && (
               <div className="flex items-center gap-6 bg-gray-800/50 rounded-xl p-6 backdrop-blur-sm border border-gray-700">
                 <div className="text-center">
@@ -317,6 +348,15 @@ const SpaceDetails = () => {
                 </div>
               </div>
             )}
+            <div className="flex items-center gap-3 ml-4">
+              <Button onClick={toggleActivation} size="sm" variant={space.isActive ? 'outline' : 'primary'} disabled={savingActivation}>
+                <Power className="w-4 h-4 mr-2" />
+                {space.isActive ? 'Deactivate' : 'Activate'}
+              </Button>
+              <span className={`text-xs px-2 py-1 rounded ${space.isActive ? 'bg-green-900/30 text-green-300 border border-green-800/40' : 'bg-red-900/30 text-red-300 border border-red-800/40'}`}>
+                {space.isActive ? 'Active' : 'Deactivated'}
+              </span>
+            </div>
           </div>
           
           {/* Feedback URL Card */}
@@ -436,7 +476,7 @@ const SpaceDetails = () => {
                   </div>
                 </div>
                 <Button
-                  onClick={() => window.open('/api-docs', '_blank')}
+                  onClick={() => window.open(`${process.env.PUBLIC_URL || ''}/api-docs`, '_blank')}
                   size="sm"
                   variant="outline"
                   className="mt-3 text-xs"
@@ -578,8 +618,8 @@ const SpaceDetails = () => {
                     </p>
                   </div>
                 ) : (
-                  <div className={viewFormat === 'list' ? "space-y-4 pr-2" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pr-2"}>
-                    {filteredFeedback.map((fb, index) => (
+                  <div id="feedback-scroll-container" className={viewFormat === 'list' ? "space-y-4 pr-2" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pr-2"}>
+                    {filteredFeedback.slice(0, visibleCount).map((fb, index) => (
                       <Card key={index} className="bg-gray-800/60 border-gray-600 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-200">
                         <CardContent className="p-6">
                           <div className="flex items-start justify-between mb-4">
@@ -625,6 +665,11 @@ const SpaceDetails = () => {
                         </CardContent>
                       </Card>
                     ))}
+                    {visibleCount < filteredFeedback.length && (
+                      <div className="flex justify-center mt-4">
+                        <Button onClick={loadMore} variant="outline" size="sm">Load more</Button>
+                      </div>
+                    )}
                   </div>
                 )}
               </CardContent>

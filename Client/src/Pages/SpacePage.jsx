@@ -186,6 +186,11 @@ const SpacePage = () => {
                 {spaceData.customMessage}
               </p>
             )}
+            {!spaceData.isActive && (
+              <div className="mt-4 text-sm text-red-300 bg-red-900/20 border border-red-800/30 inline-block px-3 py-2 rounded">
+                This space is currently deactivated. Please contact your provider.
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -277,7 +282,7 @@ const SpacePage = () => {
               {/* Submit Button */}
               <Button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || !spaceData.isActive}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3"
               >
                 {submitting ? (
@@ -286,7 +291,7 @@ const SpacePage = () => {
                     Submitting...
                   </>
                 ) : (
-                  'Submit Feedback'
+                  (spaceData.isActive ? 'Submit Feedback' : 'Space Deactivated')
                 )}
               </Button>
             </form>

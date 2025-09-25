@@ -19,6 +19,7 @@ const spaceSchema = new mongoose.Schema(
     customMessage: { type: String },
     questions: [{ type: String }],
     starRatings: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
     createdAt: { type: Date, default: Date.now },
     user_Id: {
       type: mongoose.Schema.Types.ObjectId,
