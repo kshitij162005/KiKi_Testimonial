@@ -32,6 +32,7 @@ export const API_ENDPOINTS = {
   SPACE_BY_URL: (publicUrl) => `${API_BASE_URL}/space/${publicUrl}`,
   UPDATE_SPACE: (publicUrl) => `${API_BASE_URL}/space/${publicUrl}/update`,
   ADD_LINK: (publicUrl) => `${API_BASE_URL}/space/${publicUrl}/addLink`,
+  UPDATE_SPACE_ACTIVATION: (publicUrl) => `${API_BASE_URL}/space/${publicUrl}/activation`,
   
   // Feedback
   SUBMIT_FEEDBACK: (publicUrl) => `${API_BASE_URL}/space/${publicUrl}/feedback`,
