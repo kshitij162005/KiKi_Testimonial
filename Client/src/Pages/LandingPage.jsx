@@ -54,16 +54,16 @@ const LandingPage = () => {
       title: "No-Code Required",
       description: "Integrate seamlessly with any platform. No developers needed, just copy and paste."
     },
-    {
-      icon: <FiGlobe className="w-6 h-6" />,
-      title: "Global Reach",
-      description: "Connect with customers worldwide through our multilingual and accessible platform."
-    },
-    {
-      icon: <FiUsers className="w-6 h-6" />,
-      title: "Team Collaboration",
-      description: "Work together with your team to manage and respond to customer feedback effectively."
-    }
+    // {
+    //   icon: <FiGlobe className="w-6 h-6" />,
+    //   title: "Global Reach",
+    //   description: "Connect with customers worldwide through our multilingual and accessible platform."
+    // },
+    // {
+    //   icon: <FiUsers className="w-6 h-6" />,
+    //   title: "Team Collaboration",
+    //   description: "Work together with your team to manage and respond to customer feedback effectively."
+    // }
   ];
 
   const stats = [
@@ -131,22 +131,22 @@ const LandingPage = () => {
                 Start Collecting Free
                 <FiArrowRight className="ml-2 w-5 h-5" />
               </button>
-              <button className="btn-ghost text-lg px-8 py-4 group">
+              {/* <button className="btn-ghost text-lg px-8 py-4 group">
                 <FiPlay className="mr-2 w-5 h-5 group-hover:text-primary-400 transition-colors" />
                 Watch Demo
-              </button>
+              </button> */}
             </div>
           </div>
 
           {/* Stats */}
-          <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          {/* <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-2xl md:text-3xl font-bold text-primary-400 mb-2">{stat.number}</div>
                 <div className="text-sm text-surface-500">{stat.label}</div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </section>
 
