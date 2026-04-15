@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import KiKiLogo from "../Images/kiki_logo.png";
 import {
@@ -150,6 +150,36 @@ const Dashboard = () => {
   const [spaceSearch, setSpaceSearch] = useState('');
   const navigate = useNavigate();
 
+  const sentimentCards = useMemo(() => {
+    const buckets = {
+      happy: 0,
+      satisfied: 0,
+      frustrated: 0,
+      disappointed: 0,
+    };
+
+    allFeedback.forEach((feedback) => {
+      const rating = Number(feedback?.rating || 0);
+
+      if (rating === 5) {
+        buckets.happy += 1;
+      } else if (rating === 4) {
+        buckets.satisfied += 1;
+      } else if (rating === 3 || rating === 2) {
+        buckets.frustrated += 1;
+      } else if (rating === 1) {
+        buckets.disappointed += 1;
+      }
+    });
+
+    return [
+      { gif: happyGif, label: "Happy", count: buckets.happy, color: "success" },
+      { gif: palmGif, label: "Satisfied", count: buckets.satisfied, color: "primary" },
+      { gif: angryGif, label: "Frustrated", count: buckets.frustrated, color: "warning" },
+      { gif: cryingGif, label: "Disappointed", count: buckets.disappointed, color: "error" },
+    ];
+  }, [allFeedback]);
+
   useEffect(() => {
     const fetchSpaces = async () => {
       try {
@@ -177,22 +207,51 @@ const Dashboard = () => {
             )}; path=/; max-age=${24 * 60 * 60}`;
           }
 
-          // Aggregate counts across all spaces
+          // Prefer organization endpoint for all-space aggregation.
           try {
-            let totalText = 0;
-            let totalVideo = 0;
-            for (const s of result) {
-              const resp = await fetch(API_ENDPOINTS.FEEDBACK_COUNTS(s.publicUrl));
-              if (resp.ok) {
-                const counts = await resp.json();
-                totalText += counts.textFeedbackCount || 0;
-                totalVideo += counts.videoFeedbackCount || 0;
+            const orgResp = await fetch(API_ENDPOINTS.ORG_ALL_FEEDBACKS(userId));
+            if (!orgResp.ok) {
+              throw new Error(`HTTP error! status: ${orgResp.status}`);
+            }
+
+            const orgData = await orgResp.json();
+            const feedbackList = Array.isArray(orgData?.spaces)
+              ? orgData.spaces.flatMap((space) =>
+                  Array.isArray(space.feedbacks) ? space.feedbacks : []
+                )
+              : [];
+
+            setAllFeedback(feedbackList);
+            setTextFeedbackCount(
+              feedbackList.filter((fb) => fb.feedbackType !== "video").length
+            );
+            setVideoFeedbackCount(
+              feedbackList.filter((fb) => fb.feedbackType === "video").length
+            );
+          } catch (orgErr) {
+            console.log("Organization aggregation failed, using per-space fallback", orgErr);
+
+            let fallbackFeedbacks = [];
+            for (const space of result) {
+              const feedbackResp = await fetch(
+                API_ENDPOINTS.FEEDBACK_DETAILS(space.publicUrl)
+              );
+
+              if (feedbackResp.ok) {
+                const feedbackData = await feedbackResp.json();
+                if (Array.isArray(feedbackData)) {
+                  fallbackFeedbacks = fallbackFeedbacks.concat(feedbackData);
+                }
               }
             }
-            setTextFeedbackCount(totalText);
-            setVideoFeedbackCount(totalVideo);
-          } catch (e) {
-            console.log('Failed to aggregate feedback counts', e);
+
+            setAllFeedback(fallbackFeedbacks);
+            setTextFeedbackCount(
+              fallbackFeedbacks.filter((fb) => fb.feedbackType !== "video").length
+            );
+            setVideoFeedbackCount(
+              fallbackFeedbacks.filter((fb) => fb.feedbackType === "video").length
+            );
           }
         }
       } catch (err) {
@@ -369,32 +428,7 @@ const Dashboard = () => {
                 Customer Sentiment
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  {
-                    gif: happyGif,
-                    label: "Happy",
-                    count: 45,
-                    color: "success",
-                  },
-                  {
-                    gif: palmGif,
-                    label: "Satisfied",
-                    count: 32,
-                    color: "primary",
-                  },
-                  {
-                    gif: angryGif,
-                    label: "Frustrated",
-                    count: 18,
-                    color: "warning",
-                  },
-                  {
-                    gif: cryingGif,
-                    label: "Disappointed",
-                    count: 5,
-                    color: "error",
-                  },
-                ].map((emotion, index) => (
+                {sentimentCards.map((emotion, index) => (
                   <div
                     key={index}
                     className="bg-gray-900/60 border border-gray-700 backdrop-blur-sm shadow-xl rounded-2xl p-4 text-center"

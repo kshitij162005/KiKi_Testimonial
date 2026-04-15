@@ -72,9 +72,15 @@ const SpacePage = () => {
 
     try {
       const submitData = {
-        ...feedback,
-        feedbackType: 'text'
+        name: feedback.name,
+        email: feedback.email,
+        responses: feedback.responses,
+        feedbackType: 'text',
       };
+
+      if (spaceData?.starRatings && feedback.rating > 0) {
+        submitData.rating = feedback.rating;
+      }
 
       const response = await fetch(API_ENDPOINTS.SUBMIT_FEEDBACK(publicUrl), {
         method: 'POST',

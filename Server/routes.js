@@ -185,11 +185,6 @@ router.post("/space/:publicUrl/feedback", async (req, res) => {
       return res.status(400).json({ message: "Name and email are required" });
     }
 
-    // Validate rating if provided
-    if (rating !== undefined && (rating < 1 || rating > 5)) {
-      return res.status(400).json({ message: "Rating must be between 1 and 5" });
-    }
-
     const space = await Space.findOne({ publicUrl });
 
     if (!space) {
@@ -198,6 +193,11 @@ router.post("/space/:publicUrl/feedback", async (req, res) => {
 
     if (space.isActive === false) {
       return res.status(403).json({ message: "Space is currently deactivated" });
+    }
+
+    // Validate rating only if star ratings are enabled for this space
+    if (space.starRatings && rating !== undefined && (rating < 1 || rating > 5)) {
+      return res.status(400).json({ message: "Rating must be between 1 and 5" });
     }
 
     const feedback = {
